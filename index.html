@@ -3,43 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yard Guardian — Outdoor Weather Alerts</title>
+<title>Yard Guardian</title>
+<link rel="manifest" href="data:application/json,{
+  %22name%22:%22Yard Guardian%22,
+  %22short_name%22:%22Yard Guardian%22,
+  %22start_url%22:%22.%22,
+  %22display%22:%22standalone%22,
+  %22background_color%22:%22%23f7f6f3%22,
+  %22theme_color%22:%22%2316a34a%22,
+  %22icons%22:[{%22src%22:%22data:image/svg+xml,...%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22}]
+}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
   :root {
-    --bg: #f7f6f3;
-    --card: #ffffff;
-    --border: rgba(0,0,0,0.09);
-    --text: #1a1a18;
-    --text2: #6b6b66;
-    --text3: #9e9e99;
-    --metric-bg: #f0efe9;
-    --danger-bg: #fef2f2; --danger-bd: #fca5a5; --danger-tx: #b91c1c;
-    --warn-bg: #fffbeb;   --warn-bd: #fcd34d;   --warn-tx: #92400e;
-    --good-bg: #f0fdf4;   --good-bd: #86efac;   --good-tx: #166534;
-    --blue: #2563eb;
-    --r: 12px; --rs: 8px;
+    --bg:#f7f6f3;--card:#fff;--border:rgba(0,0,0,0.09);
+    --text:#1a1a18;--text2:#6b6b66;--text3:#9e9e99;--metric-bg:#f0efe9;
+    --green:#16a34a;--blue:#2563eb;
+    --danger-bg:#fef2f2;--danger-bd:#fca5a5;--danger-tx:#b91c1c;
+    --warn-bg:#fffbeb;--warn-bd:#fcd34d;--warn-tx:#92400e;
+    --good-bg:#f0fdf4;--good-bd:#86efac;--good-tx:#166534;
+    --info-bg:#eff6ff;--info-bd:#93c5fd;--info-tx:#1d4ed8;
+    --r:12px;--rs:8px;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1c1c1a; --card: #252523; --border: rgba(255,255,255,0.09);
-      --text: #f0efe9; --text2: #a0a09a; --text3: #666662; --metric-bg: #2e2e2b;
-      --danger-bg: #2d1515; --danger-bd: #7f1d1d; --danger-tx: #fca5a5;
-      --warn-bg: #2d2108; --warn-bd: #78350f; --warn-tx: #fcd34d;
-      --good-bg: #052e16; --good-bd: #14532d; --good-tx: #86efac;
+  @media(prefers-color-scheme:dark){
+    :root{
+      --bg:#1c1c1a;--card:#252523;--border:rgba(255,255,255,0.09);
+      --text:#f0efe9;--text2:#a0a09a;--text3:#666662;--metric-bg:#2e2e2b;
+      --danger-bg:#2d1515;--danger-bd:#7f1d1d;--danger-tx:#fca5a5;
+      --warn-bg:#2d2108;--warn-bd:#78350f;--warn-tx:#fcd34d;
+      --good-bg:#052e16;--good-bd:#14532d;--good-tx:#86efac;
+      --info-bg:#0c1a2e;--info-bd:#1e40af;--info-tx:#93c5fd;
     }
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:2rem 1rem}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:1.5rem 1rem 3rem}
   .wrap{max-width:580px;margin:0 auto}
-  h1{font-size:26px;font-weight:700;display:flex;align-items:center;gap:10px}
-  h1 .leaf{color:#16a34a}
-  .sub{font-size:14px;color:var(--text2);margin-top:5px;line-height:1.5;margin-bottom:1.5rem}
-  .row{display:flex;gap:8px;margin-bottom:.75rem}
-  input{height:42px;padding:0 14px;font-size:16px;border:1.5px solid var(--border);border-radius:var(--rs);background:var(--card);color:var(--text);outline:none;width:180px}
+  .header{display:flex;align-items:center;gap:12px;margin-bottom:.5rem}
+  .logo{width:44px;height:44px;flex-shrink:0}
+  h1{font-size:24px;font-weight:700;color:var(--text)}
+  .sub{font-size:13px;color:var(--text2);margin-bottom:1.25rem;line-height:1.5}
+  .row{display:flex;gap:8px;margin-bottom:.75rem;flex-wrap:wrap}
+  input{height:42px;padding:0 14px;font-size:16px;border:1.5px solid var(--border);border-radius:var(--rs);background:var(--card);color:var(--text);outline:none;width:170px}
   input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
-  button{height:42px;padding:0 18px;font-size:14px;font-weight:600;background:var(--blue);color:#fff;border:none;border-radius:var(--rs);cursor:pointer;display:flex;align-items:center;gap:6px}
-  button:hover{opacity:.9} button:disabled{opacity:.5;cursor:not-allowed}
+  .btn{height:42px;padding:0 16px;font-size:14px;font-weight:600;border:none;border-radius:var(--rs);cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn-primary{background:var(--blue);color:#fff}
+  .btn-primary:hover{opacity:.9}
+  .btn-alert{background:#16a34a;color:#fff;font-size:13px}
+  .btn-alert:hover{opacity:.9}
+  .btn-sms{background:#7c3aed;color:#fff;font-size:13px}
+  .btn-sms:hover{opacity:.9}
   .err{font-size:13px;color:var(--danger-tx);padding:10px 14px;background:var(--danger-bg);border:1px solid var(--danger-bd);border-radius:var(--rs);margin-bottom:.75rem;display:none;align-items:center;gap:8px}
   .loc{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);background:var(--metric-bg);padding:4px 12px;border-radius:100px;margin-bottom:1.25rem}
   .slabel{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
@@ -48,17 +61,19 @@
   .card.D{border-color:var(--danger-bd);background:var(--danger-bg)}
   .card.W{border-color:var(--warn-bd);background:var(--warn-bg)}
   .card.G{border-color:var(--good-bd);background:var(--good-bg)}
+  .card.I{border-color:var(--info-bd);background:var(--info-bg)}
   .ci{font-size:24px;margin-top:1px;flex-shrink:0}
-  .ci.D{color:var(--danger-tx)} .ci.W{color:var(--warn-tx)} .ci.G{color:var(--good-tx)}
+  .ci.D{color:var(--danger-tx)}.ci.W{color:var(--warn-tx)}.ci.G{color:var(--good-tx)}.ci.I{color:var(--info-tx)}
   .ct{font-size:15px;font-weight:600;color:var(--text)}
   .cd{font-size:13px;color:var(--text2);margin-top:3px;line-height:1.5}
   .ca{font-size:12px;font-weight:600;margin-top:7px;display:flex;align-items:center;gap:4px}
-  .ca.D{color:var(--danger-tx)} .ca.W{color:var(--warn-tx)} .ca.G{color:var(--good-tx)}
+  .ca.D{color:var(--danger-tx)}.ca.W{color:var(--warn-tx)}.ca.G{color:var(--good-tx)}.ca.I{color:var(--info-tx)}
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
   @media(max-width:400px){.grid{grid-template-columns:repeat(2,1fr)}}
   .met{background:var(--metric-bg);border-radius:var(--rs);padding:12px 14px}
   .ml{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
-  .mv{font-size:24px;font-weight:700;color:var(--text);margin-top:4px}
+  .mv{font-size:22px;font-weight:700;color:var(--text);margin-top:4px}
+  .mv.sm{font-size:14px;margin-top:6px}
   .mu{font-size:12px;color:var(--text3);font-weight:400}
   .hrow{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
   .hrow::-webkit-scrollbar{height:4px}
@@ -66,46 +81,108 @@
   .hchip{flex-shrink:0;background:var(--metric-bg);border-radius:var(--rs);padding:9px 11px;text-align:center;min-width:68px;border:1px solid transparent}
   .hchip.W{background:var(--warn-bg);border-color:var(--warn-bd)}
   .hchip.D{background:var(--danger-bg);border-color:var(--danger-bd)}
+  .hchip.WALK{background:var(--good-bg);border-color:var(--good-bd)}
   .ht{font-size:11px;color:var(--text3)}
   .hi{font-size:18px;margin:4px 0;color:var(--text)}
   .htemp{font-size:14px;font-weight:600;color:var(--text)}
   .hw{font-size:11px;color:var(--text3);margin-top:2px}
+  .walk-badge{font-size:10px;font-weight:700;color:var(--good-tx);margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
   .empty{border:1.5px dashed var(--border);border-radius:var(--r);padding:3rem 2rem;text-align:center;color:var(--text3);font-size:14px;line-height:1.7}
   .empty i{font-size:36px;display:block;margin-bottom:10px}
   .attr{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:5px;margin-top:1rem}
   .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
   @keyframes sp{to{transform:rotate(360deg)}}
+  .divider{height:1px;background:var(--border);margin:1.5rem 0}
+  .send-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1.5rem}
+  .send-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:.5rem;display:flex;align-items:center;gap:8px}
+  .send-preview{font-size:13px;color:var(--text2);background:var(--metric-bg);border-radius:var(--rs);padding:10px 12px;margin-bottom:.75rem;line-height:1.6;white-space:pre-wrap;min-height:48px}
+  .send-row{display:flex;gap:8px;flex-wrap:wrap}
+  .uv-bar{height:8px;border-radius:4px;margin-top:6px;background:linear-gradient(to right,#84cc16,#eab308,#f97316,#ef4444,#7c3aed);position:relative}
+  .uv-dot{width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--text);position:absolute;top:-2px;transform:translateX(-50%)}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1><i class="ti ti-plant-2 leaf"></i>Yard Guardian</h1>
-  <p class="sub">Know when to cover the patio furniture, move the cars, or skip watering. No account or API key needed.</p>
+
+  <!-- Header with SVG icon -->
+  <div class="header">
+    <svg class="logo" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Woman silhouette with green thumb -->
+      <circle cx="22" cy="10" r="6" fill="#16a34a"/>
+      <path d="M10 38 C10 28 14 24 22 24 C30 24 34 28 34 38" fill="#16a34a"/>
+      <!-- green thumb indicator -->
+      <circle cx="33" cy="26" r="5" fill="#4ade80"/>
+      <text x="33" y="29.5" text-anchor="middle" font-size="7" fill="#14532d">✓</text>
+    </svg>
+    <div>
+      <h1>Yard Guardian</h1>
+      <p class="sub" style="margin-bottom:0">Outdoor alerts for the whole yard — furniture, plants, walks &amp; more.</p>
+    </div>
+  </div>
+  <p class="sub" style="margin-top:.5rem">Enter your ZIP to check conditions.</p>
 
   <div class="row">
     <input id="zip" type="text" placeholder="ZIP code" maxlength="5" inputmode="numeric" autocomplete="postal-code">
-    <button id="btn" onclick="go()"><span id="btxt">Check</span> <i class="ti ti-arrow-right" id="bico"></i></button>
+    <button class="btn btn-primary" id="btn" onclick="go()"><span id="btxt">Check weather</span><i class="ti ti-arrow-right" id="bico"></i></button>
   </div>
 
   <div id="err" class="err"><i class="ti ti-alert-circle"></i><span id="etxt"></span></div>
   <div id="loc" class="loc" style="display:none"><i class="ti ti-map-pin" style="font-size:14px"></i><span id="locn"></span></div>
 
   <div id="main" style="display:none">
-    <div class="sec"><div class="slabel">Outdoor action alerts</div><div id="alerts"></div></div>
-    <div class="sec"><div class="slabel">Current conditions</div><div class="grid" id="conds"></div></div>
-    <div class="sec"><div class="slabel">Next 12 hours</div><div class="hrow" id="hourly"></div></div>
-    <div class="attr"><i class="ti ti-shield-check" style="font-size:13px"></i>Weather data from Open-Meteo · open-meteo.com (free &amp; open source)</div>
+
+    <!-- ALERTS -->
+    <div class="sec">
+      <div class="slabel">Outdoor action alerts</div>
+      <div id="alerts"></div>
+    </div>
+
+    <!-- SEND TO WIFE -->
+    <div id="sendBox" class="send-box">
+      <div class="send-title"><i class="ti ti-send" style="font-size:18px;color:#7c3aed"></i> Send alert to your wife</div>
+      <div class="send-preview" id="sendPreview">Loading summary...</div>
+      <div class="send-row">
+        <button class="btn btn-sms" onclick="sendSMS()"><i class="ti ti-message"></i> Text her</button>
+        <button class="btn btn-alert" onclick="copyAlert()"><i class="ti ti-copy"></i> Copy message</button>
+      </div>
+      <div id="copyConfirm" style="font-size:12px;color:var(--good-tx);margin-top:6px;display:none"><i class="ti ti-check"></i> Copied to clipboard!</div>
+    </div>
+
+    <!-- CONDITIONS -->
+    <div class="sec">
+      <div class="slabel">Current conditions</div>
+      <div class="grid" id="conds"></div>
+    </div>
+
+    <!-- UV INDEX -->
+    <div class="sec">
+      <div class="slabel">UV index</div>
+      <div id="uvSection"></div>
+    </div>
+
+    <!-- BEST WALK TIMES -->
+    <div class="sec">
+      <div class="slabel">Best times for a walk today</div>
+      <div id="walkTimes"></div>
+    </div>
+
+    <!-- HOURLY -->
+    <div class="sec">
+      <div class="slabel">Next 12 hours</div>
+      <div class="hrow" id="hourly"></div>
+    </div>
+
+    <div class="attr"><i class="ti ti-shield-check" style="font-size:13px"></i>Weather from Open-Meteo · open-meteo.com — free &amp; open source</div>
   </div>
 
-  <div id="empty" class="empty"><i class="ti ti-cloud-search"></i>Enter your ZIP code to see outdoor alerts for your yard</div>
+  <div id="empty" class="empty"><i class="ti ti-cloud-search"></i>Enter your ZIP code to see<br>outdoor alerts for your yard</div>
 </div>
 
 <script>
-// WMO weather code → description + icon
-function wmoInfo(code) {
-  const map = {
-    0:['Clear sky','ti-sun'],
-    1:['Mainly clear','ti-sun'],2:['Partly cloudy','ti-cloud-sun'],3:['Overcast','ti-cloud'],
+function wmoInfo(code){
+  const m={
+    0:['Clear sky','ti-sun'],1:['Mainly clear','ti-sun'],
+    2:['Partly cloudy','ti-cloud-sun'],3:['Overcast','ti-cloud'],
     45:['Foggy','ti-mist'],48:['Icy fog','ti-mist'],
     51:['Light drizzle','ti-cloud-rain'],53:['Drizzle','ti-cloud-rain'],55:['Heavy drizzle','ti-cloud-rain'],
     61:['Light rain','ti-cloud-rain'],63:['Rain','ti-cloud-rain'],65:['Heavy rain','ti-cloud-rain'],
@@ -114,190 +191,322 @@ function wmoInfo(code) {
     85:['Snow showers','ti-snowflake'],86:['Heavy snow showers','ti-snowflake'],
     95:['Thunderstorm','ti-cloud-storm'],96:['Thunderstorm + hail','ti-cloud-storm'],99:['Thunderstorm + heavy hail','ti-cloud-storm']
   };
-  return map[code] || ['Unknown','ti-cloud'];
+  return m[code]||['Unknown','ti-cloud'];
 }
 
-const RULES = [
+function uvLabel(uv){
+  if(uv<=2) return ['Low','G'];
+  if(uv<=5) return ['Moderate','W'];
+  if(uv<=7) return ['High','W'];
+  if(uv<=10) return ['Very High','D'];
+  return ['Extreme','D'];
+}
+
+function uvAdvice(uv){
+  if(uv<=2) return 'No protection needed. Safe to be outside.';
+  if(uv<=5) return 'Wear sunscreen SPF 30+ for extended time outside.';
+  if(uv<=7) return 'Sunscreen, hat, and sunglasses recommended.';
+  if(uv<=10) return 'Avoid midday sun. Sunscreen SPF 50+, hat, shade.';
+  return 'Stay indoors midday. Maximum protection required.';
+}
+
+const RULES=[
   {
-    icon:'ti-armchair', title:'Cover patio furniture', level:'D',
-    check:(c,f)=> c.gust>25 || f.maxGust>30 || f.thunder || f.heavyRain,
-    desc:(c,f)=>{
-      const p=[];
-      if(f.maxGust>30) p.push(`gusts up to ${f.maxGust} mph expected`);
-      if(f.thunder) p.push('thunderstorms in forecast');
-      if(c.gust>25) p.push(`currently gusting ${c.gust} mph`);
-      if(f.heavyRain) p.push('heavy rain expected');
-      return p.join(' · ')||'High wind or storm conditions';
-    },
+    icon:'ti-armchair',title:'Cover patio furniture',level:'D',
+    check:(c,f)=>c.gust>25||f.maxGust>30||f.thunder||f.heavyRain,
+    desc:(c,f)=>{const p=[];if(f.maxGust>30)p.push(`gusts up to ${f.maxGust} mph expected`);if(f.thunder)p.push('thunderstorms in forecast');if(c.gust>25)p.push(`currently gusting ${c.gust} mph`);if(f.heavyRain)p.push('heavy rain expected');return p.join(' · ')||'High wind or storm conditions';},
     action:'Cover or bring in furniture and cushions'
   },
   {
-    icon:'ti-car', title:'Move cars to garage', level:'D',
-    check:(c,f)=> f.hail || f.severe,
-    desc:(c,f)=> f.severe?'Severe storm conditions expected':'Hail possible — protect your vehicles',
+    icon:'ti-car',title:'Move cars to garage',level:'D',
+    check:(c,f)=>f.hail||f.severe,
+    desc:(c,f)=>f.severe?'Severe storm conditions expected':'Hail possible — protect your vehicles',
     action:'Pull vehicles into the garage or under cover'
   },
   {
-    icon:'ti-droplet', title:'Skip watering today', level:'W',
-    check:(c,f)=> f.maxPrecipPct > 60,
-    desc:(c,f)=> `${f.maxPrecipPct}% chance of rain — no need to irrigate`,
+    icon:'ti-snowflake',title:'Freeze warning — protect plants',level:'D',
+    check:(c,f)=>f.minTemp<=32||c.temp<=35,
+    desc:(c,f)=>`${f.minTemp<=32?`Low of ${f.minTemp}°F expected — below freezing`:`Currently ${c.temp}°F and dropping`}`,
+    action:'Bring in potted plants, cover garden beds, disconnect hoses'
+  },
+  {
+    icon:'ti-droplet',title:'Skip watering today',level:'W',
+    check:(c,f)=>f.maxPrecipPct>60,
+    desc:(c,f)=>`${f.maxPrecipPct}% chance of rain — no need to irrigate`,
     action:'Let the rain do the work'
   },
   {
-    icon:'ti-wind', title:'Secure lightweight items', level:'W',
-    check:(c,f)=> (c.wind>20||f.maxWind>25) && !(c.gust>25||f.maxGust>30),
-    desc:(c,f)=> `Winds ${Math.max(c.wind,f.maxWind)} mph — secure lighter outdoor items`,
+    icon:'ti-wind',title:'Secure lightweight items',level:'W',
+    check:(c,f)=>(c.wind>20||f.maxWind>25)&&!(c.gust>25||f.maxGust>30),
+    desc:(c,f)=>`Winds ${Math.max(c.wind,f.maxWind)} mph — secure lighter outdoor items`,
     action:'Potted plants, pool floats, patio umbrellas'
   },
   {
-    icon:'ti-checks', title:'All clear — enjoy the yard!', level:'G',
-    check:(c,f)=> !f.thunder&&!f.heavyRain&&!f.hail&&!f.severe&&c.gust<=25&&f.maxGust<=30&&c.wind<=20&&f.maxWind<=25&&f.maxPrecipPct<=60,
+    icon:'ti-checks',title:'All clear — enjoy the yard!',level:'G',
+    check:(c,f)=>!f.thunder&&!f.heavyRain&&!f.hail&&!f.severe&&c.gust<=25&&f.maxGust<=30&&c.wind<=20&&f.maxWind<=25&&f.maxPrecipPct<=60&&f.minTemp>32,
     desc:()=>'Conditions look great for outdoor time. No storms, furniture is safe.',
     action:null
   }
 ];
 
-async function go() {
-  const zip = document.getElementById('zip').value.trim();
-  if (!/^\d{5}$/.test(zip)) { showErr('Please enter a valid 5-digit ZIP code.'); return; }
+let _alertSummary='';
+let _city='';
 
-  const btn = document.getElementById('btn');
-  btn.innerHTML = '<span class="spin"></span>';
-  btn.disabled = true;
-  document.getElementById('err').style.display = 'none';
-  document.getElementById('main').style.display = 'none';
-  document.getElementById('empty').style.display = 'none';
-  document.getElementById('loc').style.display = 'none';
+async function go(){
+  const zip=document.getElementById('zip').value.trim();
+  if(!/^\d{5}$/.test(zip)){showErr('Please enter a valid 5-digit ZIP code.');return;}
+  const btn=document.getElementById('btn');
+  btn.innerHTML='<span class="spin"></span>';
+  btn.disabled=true;
+  document.getElementById('err').style.display='none';
+  document.getElementById('main').style.display='none';
+  document.getElementById('empty').style.display='none';
+  document.getElementById('loc').style.display='none';
 
-  try {
-    // Step 1: ZIP → lat/lon via zippopotam (has CORS headers)
-    const zr = await fetch(`https://api.zippopotam.us/us/${zip}`);
-    if (!zr.ok) throw new Error('ZIP code not found. Try another.');
-    const zd = await zr.json();
-    const lat = parseFloat(zd.places[0].latitude);
-    const lon = parseFloat(zd.places[0].longitude);
-    const city = zd.places[0]['place name'];
-    const state = zd.places[0]['state abbreviation'];
+  try{
+    // ZIP → coords
+    const zr=await fetch(`https://api.zippopotam.us/us/${zip}`);
+    if(!zr.ok) throw new Error('ZIP code not found. Try another.');
+    const zd=await zr.json();
+    const lat=parseFloat(zd.places[0].latitude);
+    const lon=parseFloat(zd.places[0].longitude);
+    _city=zd.places[0]['place name']+', '+zd.places[0]['state abbreviation'];
 
-    // Step 2: Open-Meteo forecast (native CORS, no key needed)
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}`
-      + `&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_gusts_10m,weather_code,visibility`
-      + `&hourly=temperature_2m,wind_speed_10m,wind_gusts_10m,precipitation_probability,weather_code`
-      + `&daily=weather_code,wind_speed_10m_max,wind_gusts_10m_max,precipitation_probability_max`
-      + `&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=2`;
+    // Open-Meteo
+    const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}`
+      +`&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_gusts_10m,weather_code,visibility`
+      +`&hourly=temperature_2m,wind_speed_10m,wind_gusts_10m,precipitation_probability,weather_code,uv_index`
+      +`&daily=weather_code,wind_speed_10m_max,wind_gusts_10m_max,precipitation_probability_max,temperature_2m_min,temperature_2m_max,uv_index_max`
+      +`&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=2`;
 
-    const wr = await fetch(url);
-    if (!wr.ok) throw new Error('Weather service unavailable. Try again shortly.');
-    const w = await wr.json();
+    const wr=await fetch(url);
+    if(!wr.ok) throw new Error('Weather service unavailable. Try again shortly.');
+    const w=await wr.json();
 
-    const cur = w.current;
-    const hourly = w.hourly;
-    const daily = w.daily;
+    const cur=w.current;
+    const hourly=w.hourly;
+    const daily=w.daily;
 
-    // Current conditions object
-    const c = {
-      temp: Math.round(cur.temperature_2m),
-      wind: Math.round(cur.wind_speed_10m),
-      gust: Math.round(cur.wind_gusts_10m),
-      humidity: Math.round(cur.relative_humidity_2m),
-      visibility: cur.visibility != null ? Math.round(cur.visibility / 1609) : null,
-      code: cur.weather_code
+    const c={
+      temp:Math.round(cur.temperature_2m),
+      wind:Math.round(cur.wind_speed_10m),
+      gust:Math.round(cur.wind_gusts_10m),
+      humidity:Math.round(cur.relative_humidity_2m),
+      visibility:cur.visibility!=null?Math.round(cur.visibility/1609):null,
+      code:cur.weather_code
     };
 
-    // Next-24h forecast object
-    const now = new Date();
-    const next24 = hourly.time.map((t,i)=>({
-      time: new Date(t),
-      wind: hourly.wind_speed_10m[i],
-      gust: hourly.wind_gusts_10m[i],
-      precip: hourly.precipitation_probability[i],
-      code: hourly.weather_code[i],
-      temp: Math.round(hourly.temperature_2m[i])
-    })).filter(h => h.time >= now).slice(0, 24);
+    // Next 24h
+    const now=new Date();
+    const next24=hourly.time.map((t,i)=>({
+      time:new Date(t),
+      wind:hourly.wind_speed_10m[i],
+      gust:hourly.wind_gusts_10m[i],
+      precip:hourly.precipitation_probability[i],
+      code:hourly.weather_code[i],
+      temp:Math.round(hourly.temperature_2m[i]),
+      uv:hourly.uv_index[i]
+    })).filter(h=>h.time>=now).slice(0,24);
 
-    const maxWind = Math.round(Math.max(...next24.map(h=>h.wind||0)));
-    const maxGust = Math.round(Math.max(...next24.map(h=>h.gust||0)));
-    const maxPrecipPct = Math.max(...next24.map(h=>h.precip||0));
-    const codes = next24.map(h=>h.code);
-    const thunder = codes.some(c=>[95,96,99].includes(c));
-    const hail = codes.some(c=>[96,99].includes(c));
-    const heavyRain = codes.some(c=>[65,82].includes(c));
-    const severe = thunder || hail;
+    const maxWind=Math.round(Math.max(...next24.map(h=>h.wind||0)));
+    const maxGust=Math.round(Math.max(...next24.map(h=>h.gust||0)));
+    const maxPrecipPct=Math.max(...next24.map(h=>h.precip||0));
+    const minTemp=Math.round(Math.min(...next24.map(h=>h.temp)));
+    const codes=next24.map(h=>h.code);
+    const thunder=codes.some(c=>[95,96,99].includes(c));
+    const hail=codes.some(c=>[96,99].includes(c));
+    const heavyRain=codes.some(c=>[65,82].includes(c));
+    const severe=thunder||hail;
+    const f={maxWind,maxGust,maxPrecipPct,minTemp,thunder,hail,heavyRain,severe};
 
-    const f = { maxWind, maxGust, maxPrecipPct, thunder, hail, heavyRain, severe };
+    // UV max today
+    const uvMax=daily.uv_index_max[0]||0;
+    const currentUV=next24[0]?.uv||0;
 
-    // Location
-    document.getElementById('locn').textContent = `${city}, ${state} ${zip}`;
-    document.getElementById('loc').style.display = 'flex';
+    document.getElementById('locn').textContent=`${_city} ${zip}`;
+    document.getElementById('loc').style.display='flex';
 
-    // Alerts
-    const ac = document.getElementById('alerts');
-    ac.innerHTML = '';
-    RULES.forEach(rule => {
-      if (!rule.check(c, f)) return;
-      const d = document.createElement('div');
-      d.className = `card ${rule.level}`;
-      d.innerHTML = `<i class="ti ${rule.icon} ci ${rule.level}"></i><div style="flex:1">
+    // --- Render alerts ---
+    const ac=document.getElementById('alerts');
+    ac.innerHTML='';
+    const activeAlerts=[];
+    RULES.forEach(rule=>{
+      if(!rule.check(c,f))return;
+      activeAlerts.push(rule);
+      const d=document.createElement('div');
+      d.className=`card ${rule.level}`;
+      d.innerHTML=`<i class="ti ${rule.icon} ci ${rule.level}"></i><div style="flex:1">
         <div class="ct">${rule.title}</div>
-        <div class="cd">${rule.desc(c, f)}</div>
-        ${rule.action ? `<div class="ca ${rule.level}"><i class="ti ti-arrow-right"></i> ${rule.action}</div>` : ''}
+        <div class="cd">${rule.desc(c,f)}</div>
+        ${rule.action?`<div class="ca ${rule.level}"><i class="ti ti-arrow-right"></i> ${rule.action}</div>`:''}
       </div>`;
       ac.appendChild(d);
     });
 
-    // Conditions grid
-    const [wDesc] = wmoInfo(c.code);
-    document.getElementById('conds').innerHTML = [
-      {l:'Temperature', i:'ti-thermometer', v:c.temp, u:'°F'},
-      {l:'Wind speed',  i:'ti-wind',        v:c.wind, u:' mph'},
-      {l:'Wind gusts',  i:'ti-tornado',     v:c.gust, u:' mph'},
-      {l:'Rain chance', i:'ti-cloud-rain',  v:maxPrecipPct, u:'%'},
-      {l:'Humidity',    i:'ti-droplet',     v:c.humidity, u:'%'},
-      {l:'Conditions',  i:'ti-cloud',       v:wDesc, u:''},
+    // --- Build send message ---
+    buildSendMessage(c,f,uvMax,activeAlerts,zip);
+
+    // --- Conditions grid ---
+    const [wDesc]=wmoInfo(c.code);
+    document.getElementById('conds').innerHTML=[
+      {l:'Temperature',i:'ti-thermometer',v:c.temp,u:'°F'},
+      {l:'Wind speed',i:'ti-wind',v:c.wind,u:' mph'},
+      {l:'Wind gusts',i:'ti-tornado',v:c.gust,u:' mph'},
+      {l:'Rain chance',i:'ti-cloud-rain',v:maxPrecipPct,u:'%'},
+      {l:'Humidity',i:'ti-droplet',v:c.humidity,u:'%'},
+      {l:'Conditions',i:'ti-cloud',v:wDesc,u:'',sm:true},
     ].map(m=>`<div class="met">
       <div class="ml"><i class="ti ${m.i}" style="font-size:12px"></i> ${m.l}</div>
-      <div class="mv" style="${typeof m.v==='string'?'font-size:14px;margin-top:6px':''}">${m.v}<span class="mu">${m.u}</span></div>
+      <div class="mv${m.sm?' sm':''}">${m.v}<span class="mu">${m.u}</span></div>
     </div>`).join('');
 
-    // Hourly chips (next 12 hours)
-    const chips = next24.slice(0, 12);
-    document.getElementById('hourly').innerHTML = chips.map(h => {
-      const hr = h.time.getHours();
-      const lbl = hr===0?'12 AM':hr<12?`${hr} AM`:hr===12?'12 PM':`${hr-12} PM`;
-      const [,ico] = wmoInfo(h.code);
-      const cls = [95,96,99].includes(h.code) ? 'D' : (h.gust>30||h.wind>25) ? 'W' : '';
+    // --- UV section ---
+    const [uvLbl,uvLvl]=uvLabel(uvMax);
+    const uvPct=Math.min(uvMax/12*100,100);
+    document.getElementById('uvSection').innerHTML=`
+      <div class="card ${uvLvl}" style="flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <i class="ti ti-sun ci ${uvLvl}" style="font-size:28px"></i>
+          <div>
+            <div class="ct">UV Index: ${uvMax.toFixed(1)} — <span style="color:var(--${uvLvl==='D'?'danger':uvLvl==='W'?'warn':'good'}-tx)">${uvLbl}</span></div>
+            <div class="cd">${uvAdvice(uvMax)}</div>
+          </div>
+        </div>
+        <div style="padding:0 4px">
+          <div class="uv-bar"><div class="uv-dot" style="left:${uvPct}%"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:4px">
+            <span>0 Low</span><span>3</span><span>6</span><span>8</span><span>11+ Extreme</span>
+          </div>
+        </div>
+      </div>`;
+
+    // --- Best walk times ---
+    renderWalkTimes(next24,f);
+
+    // --- Hourly chips ---
+    document.getElementById('hourly').innerHTML=next24.slice(0,12).map(h=>{
+      const hr=h.time.getHours();
+      const lbl=hr===0?'12 AM':hr<12?`${hr} AM`:hr===12?'12 PM':`${hr-12} PM`;
+      const [,ico]=wmoInfo(h.code);
+      const isWalk=isGoodWalkHour(h,f);
+      const cls=[95,96,99].includes(h.code)?'D':(h.gust>30||h.wind>25)?'W':isWalk?'WALK':'';
       return `<div class="hchip ${cls}">
         <div class="ht">${lbl}</div>
         <div class="hi"><i class="ti ${ico}"></i></div>
         <div class="htemp">${h.temp}°</div>
         <div class="hw">${Math.round(h.wind)} mph</div>
+        ${isWalk?'<div class="walk-badge">Walk</div>':''}
       </div>`;
     }).join('');
 
-    document.getElementById('main').style.display = 'block';
-    try { localStorage.setItem('yg_zip', zip); } catch(e) {}
+    document.getElementById('main').style.display='block';
+    try{localStorage.setItem('yg_zip',zip);}catch(e){}
 
-  } catch(e) {
-    showErr(e.message || 'Something went wrong. Please try again.');
-    document.getElementById('empty').style.display = 'block';
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = '<span>Check</span> <i class="ti ti-arrow-right"></i>';
+  }catch(e){
+    showErr(e.message||'Something went wrong. Please try again.');
+    document.getElementById('empty').style.display='block';
+  }finally{
+    btn.disabled=false;
+    btn.innerHTML='<span>Check weather</span><i class="ti ti-arrow-right"></i>';
   }
 }
 
-function showErr(msg) {
-  document.getElementById('etxt').textContent = msg;
-  document.getElementById('err').style.display = 'flex';
+function isGoodWalkHour(h, f){
+  if([95,96,99,65,82].includes(h.code)) return false;
+  if(h.gust>25||h.wind>20) return false;
+  if(h.precip>50) return false;
+  if(h.temp<28||h.temp>95) return false;
+  if(h.uv>8) return false;
+  return true;
 }
 
-document.getElementById('zip').addEventListener('keydown', e => { if (e.key==='Enter') go(); });
+function renderWalkTimes(next24, f){
+  const goodHours=next24.filter(h=>isGoodWalkHour(h,f));
+  const el=document.getElementById('walkTimes');
+  if(!goodHours.length){
+    el.innerHTML=`<div class="card W"><i class="ti ti-walk ci W"></i><div><div class="ct">No ideal walk times today</div><div class="cd">Conditions include wind, rain, extreme temps, or high UV. Plan for tomorrow or walk early morning.</div></div></div>`;
+    return;
+  }
+  // Group into windows
+  const windows=[];
+  let wStart=goodHours[0],wEnd=goodHours[0];
+  for(let i=1;i<goodHours.length;i++){
+    const gap=(goodHours[i].time-goodHours[i-1].time)/3600000;
+    if(gap<=1){wEnd=goodHours[i];}
+    else{windows.push({start:wStart,end:wEnd});wStart=goodHours[i];wEnd=goodHours[i];}
+  }
+  windows.push({start:wStart,end:wEnd});
 
-// Auto-load saved ZIP
-try {
-  const saved = localStorage.getItem('yg_zip');
-  if (saved) { document.getElementById('zip').value = saved; go(); }
-} catch(e) {}
+  const fmt=t=>{const h=t.getHours();return h===0?'12 AM':h<12?`${h} AM`:h===12?'12 PM':`${h-12} PM`;};
+  const top3=windows.slice(0,3);
+  el.innerHTML=top3.map(w=>{
+    const same=w.start.time===w.end.time;
+    const range=same?fmt(w.start.time):`${fmt(w.start.time)} – ${fmt(w.end.time)}`;
+    const avgTemp=Math.round((w.start.temp+w.end.temp)/2);
+    const avgWind=Math.round((w.start.wind+w.end.wind)/2);
+    return `<div class="card G">
+      <i class="ti ti-walk ci G" style="font-size:22px"></i>
+      <div>
+        <div class="ct">${range}</div>
+        <div class="cd">${avgTemp}°F · ${avgWind} mph wind · ${wmoInfo(w.start.code)[0]}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function buildSendMessage(c,f,uvMax,activeAlerts,zip){
+  const [uvLbl]=uvLabel(uvMax);
+  const lines=[`🌿 Yard Guardian — ${_city}`,''];
+
+  if(activeAlerts.length===1&&activeAlerts[0].level==='G'){
+    lines.push('✅ All clear! Great day to be outside.');
+  } else {
+    activeAlerts.forEach(a=>{
+      const emoji=a.level==='D'?'🚨':a.level==='W'?'⚠️':'✅';
+      lines.push(`${emoji} ${a.title}`);
+      if(a.action) lines.push(`   → ${a.action}`);
+    });
+  }
+  lines.push('');
+  lines.push(`🌡 ${c.temp}°F  💨 ${c.wind} mph gusts ${c.gust} mph`);
+  lines.push(`☀️ UV Index: ${uvMax.toFixed(1)} (${uvLbl})`);
+  lines.push('');
+  lines.push('— via Yard Guardian app');
+
+  _alertSummary=lines.join('\n');
+  document.getElementById('sendPreview').textContent=_alertSummary;
+}
+
+function sendSMS(){
+  const encoded=encodeURIComponent(_alertSummary);
+  window.location.href=`sms:?body=${encoded}`;
+}
+
+function copyAlert(){
+  navigator.clipboard.writeText(_alertSummary).then(()=>{
+    const el=document.getElementById('copyConfirm');
+    el.style.display='block';
+    setTimeout(()=>el.style.display='none',2500);
+  }).catch(()=>{
+    const ta=document.createElement('textarea');
+    ta.value=_alertSummary;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const el=document.getElementById('copyConfirm');
+    el.style.display='block';
+    setTimeout(()=>el.style.display='none',2500);
+  });
+}
+
+function showErr(msg){
+  document.getElementById('etxt').textContent=msg;
+  document.getElementById('err').style.display='flex';
+}
+
+document.getElementById('zip').addEventListener('keydown',e=>{if(e.key==='Enter')go();});
+try{const s=localStorage.getItem('yg_zip');if(s){document.getElementById('zip').value=s;go();}}catch(e){}
 </script>
 </body>
 </html>
