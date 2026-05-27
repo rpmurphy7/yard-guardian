@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yard Guardian — Outdoor Weather Alerts</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  :root {
+    --bg: #f7f6f3;
+    --card: #ffffff;
+    --border: rgba(0,0,0,0.09);
+    --text: #1a1a18;
+    --text2: #6b6b66;
+    --text3: #9e9e99;
+    --metric-bg: #f0efe9;
+    --danger-bg: #fef2f2; --danger-bd: #fca5a5; --danger-tx: #b91c1c;
+    --warn-bg: #fffbeb;   --warn-bd: #fcd34d;   --warn-tx: #92400e;
+    --good-bg: #f0fdf4;   --good-bd: #86efac;   --good-tx: #166534;
+    --blue: #2563eb;
+    --r: 12px; --rs: 8px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1a; --card: #252523; --border: rgba(255,255,255,0.09);
+      --text: #f0efe9; --text2: #a0a09a; --text3: #666662; --metric-bg: #2e2e2b;
+      --danger-bg: #2d1515; --danger-bd: #7f1d1d; --danger-tx: #fca5a5;
+      --warn-bg: #2d2108; --warn-bd: #78350f; --warn-tx: #fcd34d;
+      --good-bg: #052e16; --good-bd: #14532d; --good-tx: #86efac;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:2rem 1rem}
+  .wrap{max-width:580px;margin:0 auto}
+  h1{font-size:26px;font-weight:700;display:flex;align-items:center;gap:10px}
+  h1 .leaf{color:#16a34a}
+  .sub{font-size:14px;color:var(--text2);margin-top:5px;line-height:1.5;margin-bottom:1.5rem}
+  .row{display:flex;gap:8px;margin-bottom:.75rem}
+  input{height:42px;padding:0 14px;font-size:16px;border:1.5px solid var(--border);border-radius:var(--rs);background:var(--card);color:var(--text);outline:none;width:180px}
+  input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+  button{height:42px;padding:0 18px;font-size:14px;font-weight:600;background:var(--blue);color:#fff;border:none;border-radius:var(--rs);cursor:pointer;display:flex;align-items:center;gap:6px}
+  button:hover{opacity:.9} button:disabled{opacity:.5;cursor:not-allowed}
+  .err{font-size:13px;color:var(--danger-tx);padding:10px 14px;background:var(--danger-bg);border:1px solid var(--danger-bd);border-radius:var(--rs);margin-bottom:.75rem;display:none;align-items:center;gap:8px}
+  .loc{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);background:var(--metric-bg);padding:4px 12px;border-radius:100px;margin-bottom:1.25rem}
+  .slabel{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+  .sec{margin-bottom:1.75rem}
+  .card{border-radius:var(--r);border:1px solid var(--border);padding:1rem 1.25rem;margin-bottom:8px;display:flex;align-items:flex-start;gap:14px;background:var(--card)}
+  .card.D{border-color:var(--danger-bd);background:var(--danger-bg)}
+  .card.W{border-color:var(--warn-bd);background:var(--warn-bg)}
+  .card.G{border-color:var(--good-bd);background:var(--good-bg)}
+  .ci{font-size:24px;margin-top:1px;flex-shrink:0}
+  .ci.D{color:var(--danger-tx)} .ci.W{color:var(--warn-tx)} .ci.G{color:var(--good-tx)}
+  .ct{font-size:15px;font-weight:600;color:var(--text)}
+  .cd{font-size:13px;color:var(--text2);margin-top:3px;line-height:1.5}
+  .ca{font-size:12px;font-weight:600;margin-top:7px;display:flex;align-items:center;gap:4px}
+  .ca.D{color:var(--danger-tx)} .ca.W{color:var(--warn-tx)} .ca.G{color:var(--good-tx)}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  @media(max-width:400px){.grid{grid-template-columns:repeat(2,1fr)}}
+  .met{background:var(--metric-bg);border-radius:var(--rs);padding:12px 14px}
+  .ml{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
+  .mv{font-size:24px;font-weight:700;color:var(--text);margin-top:4px}
+  .mu{font-size:12px;color:var(--text3);font-weight:400}
+  .hrow{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+  .hrow::-webkit-scrollbar{height:4px}
+  .hrow::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+  .hchip{flex-shrink:0;background:var(--metric-bg);border-radius:var(--rs);padding:9px 11px;text-align:center;min-width:68px;border:1px solid transparent}
+  .hchip.W{background:var(--warn-bg);border-color:var(--warn-bd)}
+  .hchip.D{background:var(--danger-bg);border-color:var(--danger-bd)}
+  .ht{font-size:11px;color:var(--text3)}
+  .hi{font-size:18px;margin:4px 0;color:var(--text)}
+  .htemp{font-size:14px;font-weight:600;color:var(--text)}
+  .hw{font-size:11px;color:var(--text3);margin-top:2px}
+  .empty{border:1.5px dashed var(--border);border-radius:var(--r);padding:3rem 2rem;text-align:center;color:var(--text3);font-size:14px;line-height:1.7}
+  .empty i{font-size:36px;display:block;margin-bottom:10px}
+  .attr{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:5px;margin-top:1rem}
+  .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1><i class="ti ti-plant-2 leaf"></i>Yard Guardian</h1>
+  <p class="sub">Know when to cover the patio furniture, move the cars, or skip watering. No account or API key needed.</p>
+
+  <div class="row">
+    <input id="zip" type="text" placeholder="ZIP code" maxlength="5" inputmode="numeric" autocomplete="postal-code">
+    <button id="btn" onclick="go()"><span id="btxt">Check</span> <i class="ti ti-arrow-right" id="bico"></i></button>
+  </div>
+
+  <div id="err" class="err"><i class="ti ti-alert-circle"></i><span id="etxt"></span></div>
+  <div id="loc" class="loc" style="display:none"><i class="ti ti-map-pin" style="font-size:14px"></i><span id="locn"></span></div>
+
+  <div id="main" style="display:none">
+    <div class="sec"><div class="slabel">Outdoor action alerts</div><div id="alerts"></div></div>
+    <div class="sec"><div class="slabel">Current conditions</div><div class="grid" id="conds"></div></div>
+    <div class="sec"><div class="slabel">Next 12 hours</div><div class="hrow" id="hourly"></div></div>
+    <div class="attr"><i class="ti ti-shield-check" style="font-size:13px"></i>Weather data from Open-Meteo · open-meteo.com (free &amp; open source)</div>
+  </div>
+
+  <div id="empty" class="empty"><i class="ti ti-cloud-search"></i>Enter your ZIP code to see outdoor alerts for your yard</div>
+</div>
+
+<script>
+// WMO weather code → description + icon
+function wmoInfo(code) {
+  const map = {
+    0:['Clear sky','ti-sun'],
+    1:['Mainly clear','ti-sun'],2:['Partly cloudy','ti-cloud-sun'],3:['Overcast','ti-cloud'],
+    45:['Foggy','ti-mist'],48:['Icy fog','ti-mist'],
+    51:['Light drizzle','ti-cloud-rain'],53:['Drizzle','ti-cloud-rain'],55:['Heavy drizzle','ti-cloud-rain'],
+    61:['Light rain','ti-cloud-rain'],63:['Rain','ti-cloud-rain'],65:['Heavy rain','ti-cloud-rain'],
+    71:['Light snow','ti-snowflake'],73:['Snow','ti-snowflake'],75:['Heavy snow','ti-snowflake'],77:['Snow grains','ti-snowflake'],
+    80:['Light showers','ti-cloud-rain'],81:['Showers','ti-cloud-rain'],82:['Heavy showers','ti-cloud-rain'],
+    85:['Snow showers','ti-snowflake'],86:['Heavy snow showers','ti-snowflake'],
+    95:['Thunderstorm','ti-cloud-storm'],96:['Thunderstorm + hail','ti-cloud-storm'],99:['Thunderstorm + heavy hail','ti-cloud-storm']
+  };
+  return map[code] || ['Unknown','ti-cloud'];
+}
+
+const RULES = [
+  {
+    icon:'ti-armchair', title:'Cover patio furniture', level:'D',
+    check:(c,f)=> c.gust>25 || f.maxGust>30 || f.thunder || f.heavyRain,
+    desc:(c,f)=>{
+      const p=[];
+      if(f.maxGust>30) p.push(`gusts up to ${f.maxGust} mph expected`);
+      if(f.thunder) p.push('thunderstorms in forecast');
+      if(c.gust>25) p.push(`currently gusting ${c.gust} mph`);
+      if(f.heavyRain) p.push('heavy rain expected');
+      return p.join(' · ')||'High wind or storm conditions';
+    },
+    action:'Cover or bring in furniture and cushions'
+  },
+  {
+    icon:'ti-car', title:'Move cars to garage', level:'D',
+    check:(c,f)=> f.hail || f.severe,
+    desc:(c,f)=> f.severe?'Severe storm conditions expected':'Hail possible — protect your vehicles',
+    action:'Pull vehicles into the garage or under cover'
+  },
+  {
+    icon:'ti-droplet', title:'Skip watering today', level:'W',
+    check:(c,f)=> f.maxPrecipPct > 60,
+    desc:(c,f)=> `${f.maxPrecipPct}% chance of rain — no need to irrigate`,
+    action:'Let the rain do the work'
+  },
+  {
+    icon:'ti-wind', title:'Secure lightweight items', level:'W',
+    check:(c,f)=> (c.wind>20||f.maxWind>25) && !(c.gust>25||f.maxGust>30),
+    desc:(c,f)=> `Winds ${Math.max(c.wind,f.maxWind)} mph — secure lighter outdoor items`,
+    action:'Potted plants, pool floats, patio umbrellas'
+  },
+  {
+    icon:'ti-checks', title:'All clear — enjoy the yard!', level:'G',
+    check:(c,f)=> !f.thunder&&!f.heavyRain&&!f.hail&&!f.severe&&c.gust<=25&&f.maxGust<=30&&c.wind<=20&&f.maxWind<=25&&f.maxPrecipPct<=60,
+    desc:()=>'Conditions look great for outdoor time. No storms, furniture is safe.',
+    action:null
+  }
+];
+
+async function go() {
+  const zip = document.getElementById('zip').value.trim();
+  if (!/^\d{5}$/.test(zip)) { showErr('Please enter a valid 5-digit ZIP code.'); return; }
+
+  const btn = document.getElementById('btn');
+  btn.innerHTML = '<span class="spin"></span>';
+  btn.disabled = true;
+  document.getElementById('err').style.display = 'none';
+  document.getElementById('main').style.display = 'none';
+  document.getElementById('empty').style.display = 'none';
+  document.getElementById('loc').style.display = 'none';
+
+  try {
+    // Step 1: ZIP → lat/lon via zippopotam (has CORS headers)
+    const zr = await fetch(`https://api.zippopotam.us/us/${zip}`);
+    if (!zr.ok) throw new Error('ZIP code not found. Try another.');
+    const zd = await zr.json();
+    const lat = parseFloat(zd.places[0].latitude);
+    const lon = parseFloat(zd.places[0].longitude);
+    const city = zd.places[0]['place name'];
+    const state = zd.places[0]['state abbreviation'];
+
+    // Step 2: Open-Meteo forecast (native CORS, no key needed)
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}`
+      + `&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_gusts_10m,weather_code,visibility`
+      + `&hourly=temperature_2m,wind_speed_10m,wind_gusts_10m,precipitation_probability,weather_code`
+      + `&daily=weather_code,wind_speed_10m_max,wind_gusts_10m_max,precipitation_probability_max`
+      + `&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=2`;
+
+    const wr = await fetch(url);
+    if (!wr.ok) throw new Error('Weather service unavailable. Try again shortly.');
+    const w = await wr.json();
+
+    const cur = w.current;
+    const hourly = w.hourly;
+    const daily = w.daily;
+
+    // Current conditions object
+    const c = {
+      temp: Math.round(cur.temperature_2m),
+      wind: Math.round(cur.wind_speed_10m),
+      gust: Math.round(cur.wind_gusts_10m),
+      humidity: Math.round(cur.relative_humidity_2m),
+      visibility: cur.visibility != null ? Math.round(cur.visibility / 1609) : null,
+      code: cur.weather_code
+    };
+
+    // Next-24h forecast object
+    const now = new Date();
+    const next24 = hourly.time.map((t,i)=>({
+      time: new Date(t),
+      wind: hourly.wind_speed_10m[i],
+      gust: hourly.wind_gusts_10m[i],
+      precip: hourly.precipitation_probability[i],
+      code: hourly.weather_code[i],
+      temp: Math.round(hourly.temperature_2m[i])
+    })).filter(h => h.time >= now).slice(0, 24);
+
+    const maxWind = Math.round(Math.max(...next24.map(h=>h.wind||0)));
+    const maxGust = Math.round(Math.max(...next24.map(h=>h.gust||0)));
+    const maxPrecipPct = Math.max(...next24.map(h=>h.precip||0));
+    const codes = next24.map(h=>h.code);
+    const thunder = codes.some(c=>[95,96,99].includes(c));
+    const hail = codes.some(c=>[96,99].includes(c));
+    const heavyRain = codes.some(c=>[65,82].includes(c));
+    const severe = thunder || hail;
+
+    const f = { maxWind, maxGust, maxPrecipPct, thunder, hail, heavyRain, severe };
+
+    // Location
+    document.getElementById('locn').textContent = `${city}, ${state} ${zip}`;
+    document.getElementById('loc').style.display = 'flex';
+
+    // Alerts
+    const ac = document.getElementById('alerts');
+    ac.innerHTML = '';
+    RULES.forEach(rule => {
+      if (!rule.check(c, f)) return;
+      const d = document.createElement('div');
+      d.className = `card ${rule.level}`;
+      d.innerHTML = `<i class="ti ${rule.icon} ci ${rule.level}"></i><div style="flex:1">
+        <div class="ct">${rule.title}</div>
+        <div class="cd">${rule.desc(c, f)}</div>
+        ${rule.action ? `<div class="ca ${rule.level}"><i class="ti ti-arrow-right"></i> ${rule.action}</div>` : ''}
+      </div>`;
+      ac.appendChild(d);
+    });
+
+    // Conditions grid
+    const [wDesc] = wmoInfo(c.code);
+    document.getElementById('conds').innerHTML = [
+      {l:'Temperature', i:'ti-thermometer', v:c.temp, u:'°F'},
+      {l:'Wind speed',  i:'ti-wind',        v:c.wind, u:' mph'},
+      {l:'Wind gusts',  i:'ti-tornado',     v:c.gust, u:' mph'},
+      {l:'Rain chance', i:'ti-cloud-rain',  v:maxPrecipPct, u:'%'},
+      {l:'Humidity',    i:'ti-droplet',     v:c.humidity, u:'%'},
+      {l:'Conditions',  i:'ti-cloud',       v:wDesc, u:''},
+    ].map(m=>`<div class="met">
+      <div class="ml"><i class="ti ${m.i}" style="font-size:12px"></i> ${m.l}</div>
+      <div class="mv" style="${typeof m.v==='string'?'font-size:14px;margin-top:6px':''}">${m.v}<span class="mu">${m.u}</span></div>
+    </div>`).join('');
+
+    // Hourly chips (next 12 hours)
+    const chips = next24.slice(0, 12);
+    document.getElementById('hourly').innerHTML = chips.map(h => {
+      const hr = h.time.getHours();
+      const lbl = hr===0?'12 AM':hr<12?`${hr} AM`:hr===12?'12 PM':`${hr-12} PM`;
+      const [,ico] = wmoInfo(h.code);
+      const cls = [95,96,99].includes(h.code) ? 'D' : (h.gust>30||h.wind>25) ? 'W' : '';
+      return `<div class="hchip ${cls}">
+        <div class="ht">${lbl}</div>
+        <div class="hi"><i class="ti ${ico}"></i></div>
+        <div class="htemp">${h.temp}°</div>
+        <div class="hw">${Math.round(h.wind)} mph</div>
+      </div>`;
+    }).join('');
+
+    document.getElementById('main').style.display = 'block';
+    try { localStorage.setItem('yg_zip', zip); } catch(e) {}
+
+  } catch(e) {
+    showErr(e.message || 'Something went wrong. Please try again.');
+    document.getElementById('empty').style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>Check</span> <i class="ti ti-arrow-right"></i>';
+  }
+}
+
+function showErr(msg) {
+  document.getElementById('etxt').textContent = msg;
+  document.getElementById('err').style.display = 'flex';
+}
+
+document.getElementById('zip').addEventListener('keydown', e => { if (e.key==='Enter') go(); });
+
+// Auto-load saved ZIP
+try {
+  const saved = localStorage.getItem('yg_zip');
+  if (saved) { document.getElementById('zip').value = saved; go(); }
+} catch(e) {}
+</script>
+</body>
+</html>
