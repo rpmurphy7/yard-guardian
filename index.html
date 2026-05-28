@@ -4,15 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yard Guardian</title>
-<link rel="manifest" href="data:application/json,{
-  %22name%22:%22Yard Guardian%22,
-  %22short_name%22:%22Yard Guardian%22,
-  %22start_url%22:%22.%22,
-  %22display%22:%22standalone%22,
-  %22background_color%22:%22%23f7f6f3%22,
-  %22theme_color%22:%22%2316a34a%22,
-  %22icons%22:[{%22src%22:%22data:image/svg+xml,...%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22}]
-}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
   :root {
@@ -37,22 +28,20 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:1.5rem 1rem 3rem}
-  .wrap{max-width:580px;margin:0 auto}
-  .header{display:flex;align-items:center;gap:12px;margin-bottom:.5rem}
-  .logo{width:44px;height:44px;flex-shrink:0}
+  .wrap{max-width:600px;margin:0 auto}
+  .header{display:flex;align-items:center;gap:12px;margin-bottom:.4rem}
+  .logo{width:42px;height:42px;flex-shrink:0}
   h1{font-size:24px;font-weight:700;color:var(--text)}
-  .sub{font-size:13px;color:var(--text2);margin-bottom:1.25rem;line-height:1.5}
+  .dateline{font-size:12px;color:var(--text3);margin-top:2px}
+  .sub{font-size:13px;color:var(--text2);margin:.5rem 0 1.25rem;line-height:1.5}
   .row{display:flex;gap:8px;margin-bottom:.75rem;flex-wrap:wrap}
   input{height:42px;padding:0 14px;font-size:16px;border:1.5px solid var(--border);border-radius:var(--rs);background:var(--card);color:var(--text);outline:none;width:170px}
   input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
   .btn{height:42px;padding:0 16px;font-size:14px;font-weight:600;border:none;border-radius:var(--rs);cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap}
   .btn:disabled{opacity:.5;cursor:not-allowed}
-  .btn-primary{background:var(--blue);color:#fff}
-  .btn-primary:hover{opacity:.9}
-  .btn-alert{background:#16a34a;color:#fff;font-size:13px}
-  .btn-alert:hover{opacity:.9}
-  .btn-sms{background:#7c3aed;color:#fff;font-size:13px}
-  .btn-sms:hover{opacity:.9}
+  .btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{opacity:.9}
+  .btn-sms{background:#7c3aed;color:#fff;font-size:13px}.btn-sms:hover{opacity:.9}
+  .btn-copy{background:var(--green);color:#fff;font-size:13px}.btn-copy:hover{opacity:.9}
   .err{font-size:13px;color:var(--danger-tx);padding:10px 14px;background:var(--danger-bg);border:1px solid var(--danger-bd);border-radius:var(--rs);margin-bottom:.75rem;display:none;align-items:center;gap:8px}
   .loc{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);background:var(--metric-bg);padding:4px 12px;border-radius:100px;margin-bottom:1.25rem}
   .slabel{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
@@ -67,7 +56,7 @@
   .ct{font-size:15px;font-weight:600;color:var(--text)}
   .cd{font-size:13px;color:var(--text2);margin-top:3px;line-height:1.5}
   .ca{font-size:12px;font-weight:600;margin-top:7px;display:flex;align-items:center;gap:4px}
-  .ca.D{color:var(--danger-tx)}.ca.W{color:var(--warn-tx)}.ca.G{color:var(--good-tx)}.ca.I{color:var(--info-tx)}
+  .ca.D{color:var(--danger-tx)}.ca.W{color:var(--warn-tx)}.ca.G{color:var(--good-tx)}
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
   @media(max-width:400px){.grid{grid-template-columns:repeat(2,1fr)}}
   .met{background:var(--metric-bg);border-radius:var(--rs);padding:12px 14px}
@@ -92,162 +81,388 @@
   .attr{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:5px;margin-top:1rem}
   .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
   @keyframes sp{to{transform:rotate(360deg)}}
-  .divider{height:1px;background:var(--border);margin:1.5rem 0}
-  .send-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1.5rem}
+  .send-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1.75rem}
   .send-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:.5rem;display:flex;align-items:center;gap:8px}
   .send-preview{font-size:13px;color:var(--text2);background:var(--metric-bg);border-radius:var(--rs);padding:10px 12px;margin-bottom:.75rem;line-height:1.6;white-space:pre-wrap;min-height:48px}
   .send-row{display:flex;gap:8px;flex-wrap:wrap}
   .uv-bar{height:8px;border-radius:4px;margin-top:6px;background:linear-gradient(to right,#84cc16,#eab308,#f97316,#ef4444,#7c3aed);position:relative}
-  .uv-dot{width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--text);position:absolute;top:-2px;transform:translateX(-50%)}
+  .uv-dot{width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid #333;position:absolute;top:-2px;transform:translateX(-50%)}
+  /* 7-day forecast */
+  .forecast-row{border-radius:var(--rs);background:var(--card);border:1px solid var(--border);margin-bottom:8px;overflow:hidden}
+  .forecast-row.today{border-color:var(--blue)}
+  .forecast-row.D{border-left:4px solid var(--danger-tx)}
+  .forecast-row.W{border-left:4px solid var(--warn-tx)}
+  .forecast-row.G{border-left:4px solid var(--good-tx)}
+  .fc-top{display:flex;align-items:center;padding:10px 14px;gap:10px}
+  .fc-day{font-size:13px;font-weight:700;color:var(--text);width:38px;flex-shrink:0}
+  .fc-date{font-size:11px;color:var(--text3);width:34px;flex-shrink:0}
+  .fc-icon{font-size:20px;color:var(--text);width:24px;text-align:center;flex-shrink:0}
+  .fc-desc{font-size:12px;color:var(--text2);flex:1;min-width:0}
+  .fc-temps{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;flex-shrink:0;text-align:right}
+  .fc-temps span{font-size:12px;font-weight:400;color:var(--text3)}
+  .fc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .fc-dot.D{background:var(--danger-tx)}
+  .fc-dot.W{background:var(--warn-tx)}
+  .fc-dot.G{background:var(--good-tx)}
+  .fc-actions{padding:0 14px 10px 14px;display:flex;flex-direction:column;gap:4px}
+  .fc-action-item{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500}
+  .fc-action-item.D{color:var(--danger-tx)}
+  .fc-action-item.W{color:var(--warn-tx)}
+  .fc-action-item.G{color:var(--good-tx)}
 </style>
 </head>
 <body>
 <div class="wrap">
-
-  <!-- Header with SVG icon -->
   <div class="header">
     <svg class="logo" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Woman silhouette with green thumb -->
       <circle cx="22" cy="10" r="6" fill="#16a34a"/>
       <path d="M10 38 C10 28 14 24 22 24 C30 24 34 28 34 38" fill="#16a34a"/>
-      <!-- green thumb indicator -->
       <circle cx="33" cy="26" r="5" fill="#4ade80"/>
-      <text x="33" y="29.5" text-anchor="middle" font-size="7" fill="#14532d">✓</text>
+      <text x="33" y="29.5" text-anchor="middle" font-size="7" fill="#14532d">V</text>
     </svg>
     <div>
       <h1>Yard Guardian</h1>
-      <p class="sub" style="margin-bottom:0">Outdoor alerts for the whole yard — furniture, plants, walks &amp; more.</p>
+      <div class="dateline" id="dateline"></div>
     </div>
   </div>
-  <p class="sub" style="margin-top:.5rem">Enter your ZIP to check conditions.</p>
+  <p class="sub">Outdoor alerts for the whole yard — furniture, plants, walks and more.</p>
 
   <div class="row">
     <input id="zip" type="text" placeholder="ZIP code" maxlength="5" inputmode="numeric" autocomplete="postal-code">
-    <button class="btn btn-primary" id="btn" onclick="go()"><span id="btxt">Check weather</span><i class="ti ti-arrow-right" id="bico"></i></button>
+    <button class="btn btn-primary" id="btn" onclick="go()"><span id="btxt">Check weather</span><i class="ti ti-arrow-right"></i></button>
   </div>
 
   <div id="err" class="err"><i class="ti ti-alert-circle"></i><span id="etxt"></span></div>
   <div id="loc" class="loc" style="display:none"><i class="ti ti-map-pin" style="font-size:14px"></i><span id="locn"></span></div>
 
   <div id="main" style="display:none">
-
-    <!-- ALERTS -->
     <div class="sec">
-      <div class="slabel">Outdoor action alerts</div>
+      <div class="slabel">Outdoor action alerts - today</div>
       <div id="alerts"></div>
+      <div id="wateringRec"></div>
     </div>
 
-    <!-- SEND TO WIFE -->
     <div id="sendBox" class="send-box">
       <div class="send-title"><i class="ti ti-send" style="font-size:18px;color:#7c3aed"></i> Send alert to your wife</div>
-      <div class="send-preview" id="sendPreview">Loading summary...</div>
+      <div class="send-preview" id="sendPreview"></div>
       <div class="send-row">
         <button class="btn btn-sms" onclick="sendSMS()"><i class="ti ti-message"></i> Text her</button>
-        <button class="btn btn-alert" onclick="copyAlert()"><i class="ti ti-copy"></i> Copy message</button>
+        <button class="btn btn-copy" onclick="copyAlert()"><i class="ti ti-copy"></i> Copy message</button>
       </div>
-      <div id="copyConfirm" style="font-size:12px;color:var(--good-tx);margin-top:6px;display:none"><i class="ti ti-check"></i> Copied to clipboard!</div>
+      <div id="copyConfirm" style="font-size:12px;color:var(--good-tx);margin-top:6px;display:none"><i class="ti ti-check"></i> Copied!</div>
     </div>
 
-    <!-- CONDITIONS -->
     <div class="sec">
-      <div class="slabel">Current conditions</div>
-      <div class="grid" id="conds"></div>
+      <div class="slabel">7-Day Yard Forecast</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:8px;display:flex;align-items:center;gap:12px">
+        <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger-tx);margin-right:3px"></span>Action needed</span>
+        <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warn-tx);margin-right:3px"></span>Worth watching</span>
+        <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--good-tx);margin-right:3px"></span>All clear</span>
+      </div>
+      <div id="forecast7"></div>
     </div>
 
-    <!-- UV INDEX -->
+    <div class="sec"><div class="slabel">Current conditions</div><div class="grid" id="conds"></div></div>
+    <div class="sec"><div class="slabel">UV index today</div><div id="uvSection"></div></div>
+
     <div class="sec">
-      <div class="slabel">UV index</div>
-      <div id="uvSection"></div>
+      <div class="slabel">Soil moisture and recent rainfall</div>
+      <div id="soilContext"><div class="met" style="color:var(--text3);font-size:13px">Loading soil data...</div></div>
     </div>
 
-    <!-- BEST WALK TIMES -->
     <div class="sec">
-      <div class="slabel">Best times for a walk today</div>
+      <div class="slabel">Top 3 Best 30-Minute Walk Increments</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:8px">Ranked by comfort for little ones — temp, humidity, UV &amp; wind</div>
       <div id="walkTimes"></div>
     </div>
 
-    <!-- HOURLY -->
-    <div class="sec">
-      <div class="slabel">Next 12 hours</div>
-      <div class="hrow" id="hourly"></div>
-    </div>
-
-    <div class="attr"><i class="ti ti-shield-check" style="font-size:13px"></i>Weather from Open-Meteo · open-meteo.com — free &amp; open source</div>
+    <div class="sec"><div class="slabel">Next 12 hours</div><div class="hrow" id="hourly"></div></div>
+    <div class="attr"><i class="ti ti-shield-check" style="font-size:13px"></i>Weather from Open-Meteo - open-meteo.com - free and open source</div>
   </div>
 
   <div id="empty" class="empty"><i class="ti ti-cloud-search"></i>Enter your ZIP code to see<br>outdoor alerts for your yard</div>
 </div>
 
 <script>
+(function(){
+  const now=new Date();
+  const opts={weekday:'long',year:'numeric',month:'long',day:'numeric'};
+  document.getElementById('dateline').textContent=now.toLocaleDateString('en-US',opts);
+})();
+
 function wmoInfo(code){
   const m={
-    0:['Clear sky','ti-sun'],1:['Mainly clear','ti-sun'],
+    0:['Clear','ti-sun'],1:['Mainly clear','ti-sun'],
     2:['Partly cloudy','ti-cloud-sun'],3:['Overcast','ti-cloud'],
     45:['Foggy','ti-mist'],48:['Icy fog','ti-mist'],
     51:['Light drizzle','ti-cloud-rain'],53:['Drizzle','ti-cloud-rain'],55:['Heavy drizzle','ti-cloud-rain'],
     61:['Light rain','ti-cloud-rain'],63:['Rain','ti-cloud-rain'],65:['Heavy rain','ti-cloud-rain'],
     71:['Light snow','ti-snowflake'],73:['Snow','ti-snowflake'],75:['Heavy snow','ti-snowflake'],77:['Snow grains','ti-snowflake'],
-    80:['Light showers','ti-cloud-rain'],81:['Showers','ti-cloud-rain'],82:['Heavy showers','ti-cloud-rain'],
+    80:['Showers','ti-cloud-rain'],81:['Showers','ti-cloud-rain'],82:['Heavy showers','ti-cloud-rain'],
     85:['Snow showers','ti-snowflake'],86:['Heavy snow showers','ti-snowflake'],
-    95:['Thunderstorm','ti-cloud-storm'],96:['Thunderstorm + hail','ti-cloud-storm'],99:['Thunderstorm + heavy hail','ti-cloud-storm']
+    95:['Thunderstorm','ti-cloud-storm'],96:['T-storm + hail','ti-cloud-storm'],99:['T-storm + hail','ti-cloud-storm']
   };
   return m[code]||['Unknown','ti-cloud'];
 }
 
 function uvLabel(uv){
-  if(uv<=2) return ['Low','G'];
-  if(uv<=5) return ['Moderate','W'];
-  if(uv<=7) return ['High','W'];
-  if(uv<=10) return ['Very High','D'];
-  return ['Extreme','D'];
+  if(uv<=2)return['Low','G'];if(uv<=5)return['Moderate','W'];
+  if(uv<=7)return['High','W'];if(uv<=10)return['Very High','D'];
+  return['Extreme','D'];
+}
+function uvAdvice(uv){
+  if(uv<=2)return'No protection needed. Safe to be outside.';
+  if(uv<=5)return'Wear sunscreen SPF 30+ for extended outdoor time.';
+  if(uv<=7)return'Sunscreen, hat, and sunglasses recommended.';
+  if(uv<=10)return'Avoid midday sun. SPF 50+, hat, and shade for babies.';
+  return'Stay indoors midday. Maximum protection required.';
 }
 
-function uvAdvice(uv){
-  if(uv<=2) return 'No protection needed. Safe to be outside.';
-  if(uv<=5) return 'Wear sunscreen SPF 30+ for extended time outside.';
-  if(uv<=7) return 'Sunscreen, hat, and sunglasses recommended.';
-  if(uv<=10) return 'Avoid midday sun. Sunscreen SPF 50+, hat, shade.';
-  return 'Stay indoors midday. Maximum protection required.';
+// Heat index (Steadman formula)
+function heatIndex(tempF, rh){
+  if(tempF<80) return tempF;
+  const T=tempF, R=rh;
+  return Math.round(-42.379+2.04901523*T+10.14333127*R-0.22475541*T*R
+    -0.00683783*T*T-0.05391552*R*R+0.00122874*T*T*R
+    +0.00085282*T*R*R-0.00000199*T*T*R*R);
 }
+
+// Comfort score for walking with babies/toddlers. Returns -1 if disqualified, else 0-130+
+// ── YARD GUARDIAN WALK INDEX ──────────────────────────────────
+// Proprietary safety-first score for newborns, toddlers, and dogs.
+// Returns {score, breakdown} where score 0-100, -1 = disqualified.
+// Each factor is scored 0-100 and weighted by importance for infant safety.
+
+function aqiCategory(aqi){
+  if(aqi===null||aqi===undefined) return{label:'Unknown',score:80,color:'#9e9e99'};
+  if(aqi<=50)   return{label:'Good',score:100,color:'#16a34a'};
+  if(aqi<=100)  return{label:'Moderate',score:75,color:'#ca8a04'};
+  if(aqi<=150)  return{label:'Unhealthy for sensitive',score:30,color:'#ea580c'};
+  if(aqi<=200)  return{label:'Unhealthy',score:0,color:'#b91c1c'};
+  return              {label:'Very unhealthy',score:0,color:'#7c3aed'};
+}
+
+function uvSafetyScore(uv){
+  // AAP recommends keeping newborns out of direct sun entirely; UV is the #1 infant skin hazard
+  if(uv===null||uv===undefined) return{score:70,label:'Unknown'};
+  if(uv<=1)  return{score:100,label:'Minimal ('+uv.toFixed(1)+')'};
+  if(uv<=2)  return{score:90, label:'Low ('+uv.toFixed(1)+')'};
+  if(uv<=3)  return{score:78, label:'Low-mod ('+uv.toFixed(1)+')'};
+  if(uv<=5)  return{score:58, label:'Moderate ('+uv.toFixed(1)+')'};
+  if(uv<=7)  return{score:30, label:'High ('+uv.toFixed(1)+')'};
+  if(uv<=9)  return{score:10, label:'Very high ('+uv.toFixed(1)+')'};
+  return           {score:0,  label:'Extreme ('+uv.toFixed(1)+')'};
+}
+
+function tempSafetyScore(tempF, humidity){
+  // AAP safe outdoor range for infants: 50-80F with low humidity
+  const hi=heatIndex(tempF,humidity||50);
+  let score=100;
+  // Temperature
+  if(tempF>=65&&tempF<=75)      score=100;
+  else if(tempF>75&&tempF<=80)  score=88;
+  else if(tempF>80&&tempF<=85)  score=70;
+  else if(tempF>85&&tempF<=90)  score=45;
+  else if(tempF>90&&tempF<=95)  score=20;
+  else if(tempF>95)             score=0;   // dangerous for infants
+  else if(tempF>=55&&tempF<65)  score=82;
+  else if(tempF>=45&&tempF<55)  score=60;
+  else if(tempF>=35&&tempF<45)  score=35;
+  else if(tempF<35)             score=10;  // too cold for newborn
+  // Heat index override — feels-like matters more than thermometer
+  if(hi>105) score=Math.min(score,5);
+  else if(hi>100) score=Math.min(score,15);
+  else if(hi>95)  score=Math.min(score,30);
+  else if(hi>90)  score=Math.min(score,55);
+  return{score,feelsLike:hi};
+}
+
+function humiditySafetyScore(rh){
+  // Infants overheat faster in humidity; dogs pant harder
+  if(rh<=30)  return{score:95, label:rh+'% (Crisp)'};
+  if(rh<=45)  return{score:100,label:rh+'% (Ideal)'};
+  if(rh<=55)  return{score:90, label:rh+'% (Comfortable)'};
+  if(rh<=65)  return{score:75, label:rh+'% (Noticeable)'};
+  if(rh<=75)  return{score:50, label:rh+'% (Humid)'};
+  if(rh<=85)  return{score:25, label:rh+'% (Very humid)'};
+  return           {score:5,  label:rh+'% (Oppressive)'};
+}
+
+function windSafetyScore(wind, gust){
+  // Moderate breeze = good for stroller cooling; too strong = unsafe
+  if(gust>25) return{score:0,label:wind+' mph / '+gust+' gust (Too windy)'};
+  if(wind<=5)  return{score:80, label:wind+' mph (Calm)'};
+  if(wind<=10) return{score:100,label:wind+' mph (Light breeze)'};  // perfect for stroller
+  if(wind<=15) return{score:80, label:wind+' mph (Gentle)'};
+  if(wind<=20) return{score:50, label:wind+' mph (Breezy)'};
+  return           {score:20, label:wind+' mph (Windy)'};
+}
+
+function skyScore(code){
+  if([0,1].includes(code)) return{score:70,label:'Sunny'};        // great but UV exposure
+  if(code===2)              return{score:100,label:'Partly cloudy'}; // best — shade + bright
+  if(code===3)              return{score:85, label:'Overcast'};    // no UV, fine
+  return                        {score:0,  label:'Rain/Storm'};   // disqualified
+}
+
+function timeOfDayScore(hr){
+  // Pediatric guidance: avoid 10am-4pm peak sun; morning and late afternoon best
+  if(hr>=7&&hr<=9)    return{score:100,label:'Early morning'};
+  if(hr>=17&&hr<=19)  return{score:95, label:'Late afternoon'};
+  if(hr===10||hr===16) return{score:75,label:'Shoulder hour'};
+  if(hr>=6&&hr<7)     return{score:70, label:'Dawn'};
+  if(hr===20)          return{score:65, label:'Evening'};
+  if(hr>=11&&hr<=15)  return{score:30, label:'Peak sun hours'};
+  return                   {score:0,  label:'Night'};
+}
+
+function yardGuardianWalkIndex(h){
+  const hr=h.time.getHours();
+
+  // Hard disqualifiers — score -1 means do not show
+  if(hr<6||hr>=21)                                          return{score:-1,reason:'Too dark'};
+  if([95,96,99,65,82,63,61,55,53,51].includes(h.code))     return{score:-1,reason:'Rain or storms'};
+  if(h.gust>25||h.wind>20)                                  return{score:-1,reason:'Too windy for stroller'};
+  if(h.precip>45)                                           return{score:-1,reason:'Rain likely'};
+  if(h.temp<32||h.temp>98)                                  return{score:-1,reason:'Dangerous temperature'};
+  if(h.uv>=10)                                              return{score:-1,reason:'Extreme UV'};
+  const aqi=h.aqi;
+  if(aqi!==null&&aqi!==undefined&&aqi>150)                 return{score:-1,reason:'Unhealthy air quality'};
+
+  // Score each safety factor
+  const uvS   = uvSafetyScore(h.uv);
+  const tempS  = tempSafetyScore(h.temp, h.humidity||50);
+  const humS   = humiditySafetyScore(h.humidity||50);
+  const windS  = windSafetyScore(h.wind||0, h.gust||0);
+  const aqiS   = aqiCategory(aqi);
+  const skyS   = skyScore(h.code);
+  const todS   = timeOfDayScore(hr);
+
+  // Weighted composite — UV and temp are most critical for infant safety
+  // Weights must sum to 1.0
+  const composite=
+    uvS.score   * 0.25 +   // UV exposure — #1 infant skin hazard
+    tempS.score * 0.22 +   // Temperature / heat index
+    humS.score  * 0.15 +   // Humidity / heat stress
+    aqiS.score  * 0.15 +   // Air quality — PM2.5 lung safety
+    windS.score * 0.10 +   // Wind safety for stroller
+    skyS.score  * 0.08 +   // Cloud cover / shade
+    todS.score  * 0.05;    // Time of day guidance
+
+  const score=Math.round(composite);
+  return{
+    score,
+    uv:uvS, temp:tempS, humidity:humS, wind:windS,
+    aqi:aqiS, sky:skyS, tod:todS,
+    feelsLike:tempS.feelsLike
+  };
+}
+
+function walkGradeLabel(score){
+  if(score>=88) return{grade:'A',label:'Excellent',color:'#15803d',bg:'#f0fdf4',bd:'#86efac'};
+  if(score>=75) return{grade:'B',label:'Good',     color:'#16a34a',bg:'#f0fdf4',bd:'#86efac'};
+  if(score>=60) return{grade:'C',label:'Fair',     color:'#ca8a04',bg:'#fffbeb',bd:'#fcd34d'};
+  if(score>=45) return{grade:'D',label:'Poor',     color:'#ea580c',bg:'#fff7ed',bd:'#fdba74'};
+  return             {grade:'F',label:'Avoid',     color:'#b91c1c',bg:'#fef2f2',bd:'#fca5a5'};
+}
+
+function isGoodWalkHour(h){
+  return yardGuardianWalkIndex(h).score > 0;
+}
+
+function walkComfortScore(h){
+  const idx=yardGuardianWalkIndex(h);
+  return idx.score;
+}
+
+function walkFeelLabel(score){
+  const g=walkGradeLabel(score);
+  return{label:g.label,color:g.color};
+}
+
+function isDrySoil(c,f){
+  // True if soil is dry or bone dry — works on null/0/low values
+  const sm=c.soilMoisture;
+  if(sm===null||sm===undefined||sm===0) return true;
+  if(sm<0.10) return true;
+  // Also dry if no rain in 7 days regardless of sensor
+  if(f.last7Rain!==null&&f.last7Rain<0.1) return true;
+  return false;
+}
+function isRainComing(f){ return f.maxPrecipPct>=50||f.thunder||f.heavyRain; }
 
 const RULES=[
-  {
-    icon:'ti-armchair',title:'Cover patio furniture',level:'D',
+  {icon:'ti-armchair',title:'Cover patio furniture',level:'D',emoji:'🪑',
     check:(c,f)=>c.gust>25||f.maxGust>30||f.thunder||f.heavyRain,
-    desc:(c,f)=>{const p=[];if(f.maxGust>30)p.push(`gusts up to ${f.maxGust} mph expected`);if(f.thunder)p.push('thunderstorms in forecast');if(c.gust>25)p.push(`currently gusting ${c.gust} mph`);if(f.heavyRain)p.push('heavy rain expected');return p.join(' · ')||'High wind or storm conditions';},
-    action:'Cover or bring in furniture and cushions'
-  },
-  {
-    icon:'ti-car',title:'Move cars to garage',level:'D',
+    desc:(c,f)=>{const p=[];if(f.maxGust>30)p.push('gusts up to '+f.maxGust+' mph');if(f.thunder)p.push('thunderstorms');if(c.gust>25)p.push('gusting '+c.gust+' mph now');if(f.heavyRain)p.push('heavy rain');return p.join(' - ')||'High wind or storm conditions';},
+    action:'Cover or bring in furniture and cushions'},
+  {icon:'ti-car',title:'Move cars to garage',level:'D',emoji:'🚗',
     check:(c,f)=>f.hail||f.severe,
-    desc:(c,f)=>f.severe?'Severe storm conditions expected':'Hail possible — protect your vehicles',
-    action:'Pull vehicles into the garage or under cover'
-  },
-  {
-    icon:'ti-snowflake',title:'Freeze warning — protect plants',level:'D',
+    desc:(c,f)=>f.severe?'Severe storm conditions expected':'Hail possible',
+    action:'Pull vehicles into the garage or under cover'},
+  {icon:'ti-snowflake',title:'Freeze warning - protect plants',level:'D',emoji:'🌿',
     check:(c,f)=>f.minTemp<=32||c.temp<=35,
-    desc:(c,f)=>`${f.minTemp<=32?`Low of ${f.minTemp}°F expected — below freezing`:`Currently ${c.temp}°F and dropping`}`,
-    action:'Bring in potted plants, cover garden beds, disconnect hoses'
-  },
-  {
-    icon:'ti-droplet',title:'Skip watering today',level:'W',
-    check:(c,f)=>f.maxPrecipPct>60,
-    desc:(c,f)=>`${f.maxPrecipPct}% chance of rain — no need to irrigate`,
-    action:'Let the rain do the work'
-  },
-  {
-    icon:'ti-wind',title:'Secure lightweight items',level:'W',
+    desc:(c,f)=>f.minTemp<=32?'Low of '+f.minTemp+'F expected - below freezing':'Currently '+c.temp+'F and dropping',
+    action:'Bring in pots, cover garden beds, disconnect hoses'},
+  // MUST WATER — dry soil, no rain coming
+  {icon:'ti-droplet-filled',title:'Water the yard today',level:'D',emoji:'🌵',
+    check:(c,f)=>isDrySoil(c,f)&&!isRainComing(f),
+    desc:(c,f)=>{
+      const sm=c.soilMoisture;
+      const r7=f.last7Rain!=null?f.last7Rain:0;
+      const parts=[];
+      if(sm===0||sm===null||sm===undefined) parts.push('soil moisture reads near zero');
+      else if(sm<0.10) parts.push('soil moisture very low ('+Math.round(sm*100)+'%)');
+      if(r7<0.1) parts.push('no meaningful rain in 7 days');
+      else parts.push('only '+r7.toFixed(2)+'" rain in past week');
+      if(f.maxPrecipPct<30) parts.push('no rain in the forecast');
+      return parts.join(' - ');
+    },
+    action:'Water lawn, garden beds, and potted plants today'},
+  // SHOULD WATER SOON — dry but small rain chance
+  {icon:'ti-droplet-half',title:'Water soon — rain unlikely to be enough',level:'W',emoji:'🌿',
+    check:(c,f)=>isDrySoil(c,f)&&f.maxPrecipPct>=30&&f.maxPrecipPct<50&&!f.thunder&&!f.heavyRain,
+    desc:(c,f)=>{
+      const r7=f.last7Rain!=null?f.last7Rain:0;
+      return 'Soil is dry'+(r7<0.1?' with no rain in a week':' - only '+r7.toFixed(2)+'" this week')+' - '+f.maxPrecipPct+'% rain chance likely not enough';
+    },
+    action:'Water today or tomorrow — do not rely on forecast rain'},
+  // SKIP WATERING — wet soil or heavy rain coming
+  {icon:'ti-droplet',title:'Skip watering today',level:'W',emoji:'💧',
+    check:(c,f)=>{
+      if(isDrySoil(c,f)) return false; // dry = water, not skip
+      const sm=c.soilMoisture;
+      const alreadyWet=f.last3Rain>0.5||(sm!=null&&sm>=0.25);
+      return f.maxPrecipPct>60||alreadyWet;
+    },
+    desc:(c,f)=>{
+      const sm=c.soilMoisture;
+      const parts=[];
+      if(f.maxPrecipPct>60) parts.push(f.maxPrecipPct+'% chance of rain');
+      if(f.last3Rain>0.1) parts.push(f.last3Rain.toFixed(2)+'" rain in last 3 days');
+      if(sm!=null&&sm>=0.25) parts.push('soil is moist');
+      return parts.join(' + ')||'Ground has enough moisture';
+    },
+    action:'Let nature handle it - ground has enough moisture'},
+  {icon:'ti-wind',title:'Secure lightweight items',level:'W',emoji:'💨',
     check:(c,f)=>(c.wind>20||f.maxWind>25)&&!(c.gust>25||f.maxGust>30),
-    desc:(c,f)=>`Winds ${Math.max(c.wind,f.maxWind)} mph — secure lighter outdoor items`,
-    action:'Potted plants, pool floats, patio umbrellas'
-  },
-  {
-    icon:'ti-checks',title:'All clear — enjoy the yard!',level:'G',
-    check:(c,f)=>!f.thunder&&!f.heavyRain&&!f.hail&&!f.severe&&c.gust<=25&&f.maxGust<=30&&c.wind<=20&&f.maxWind<=25&&f.maxPrecipPct<=60&&f.minTemp>32,
-    desc:()=>'Conditions look great for outdoor time. No storms, furniture is safe.',
-    action:null
-  }
+    desc:(c,f)=>'Sustained winds '+Math.max(c.wind,f.maxWind)+' mph',
+    action:'Potted plants, pool floats, patio umbrellas'},
+  {icon:'ti-checks',title:'All clear - enjoy the yard!',level:'G',emoji:'✅',
+    check:(c,f)=>!f.thunder&&!f.heavyRain&&!f.hail&&!f.severe&&c.gust<=25&&f.maxGust<=30&&c.wind<=20&&f.maxWind<=25&&f.maxPrecipPct<=60&&f.minTemp>32&&!isDrySoil(c,f),
+    desc:()=>'Great day to be outside. No storms, furniture is safe.',
+    action:null}
 ];
+
+function evalDay(dayData){
+  const c={temp:dayData.minTemp+5,wind:dayData.maxWind*0.6,gust:dayData.maxGust};
+  const f={maxWind:dayData.maxWind,maxGust:dayData.maxGust,maxPrecipPct:dayData.maxPrecip,
+    minTemp:dayData.minTemp,thunder:dayData.thunder,hail:dayData.hail,
+    heavyRain:dayData.heavyRain,severe:dayData.severe};
+  const triggered=RULES.filter(r=>r.level!=='G'&&r.check(c,f));
+  const worstLevel=triggered.some(r=>r.level==='D')?'D':triggered.some(r=>r.level==='W')?'W':'G';
+  return{triggered,worstLevel};
+}
 
 let _alertSummary='';
 let _city='';
@@ -264,24 +479,34 @@ async function go(){
   document.getElementById('loc').style.display='none';
 
   try{
-    // ZIP → coords
-    const zr=await fetch(`https://api.zippopotam.us/us/${zip}`);
-    if(!zr.ok) throw new Error('ZIP code not found. Try another.');
+    const zr=await fetch('https://api.zippopotam.us/us/'+zip);
+    if(!zr.ok)throw new Error('ZIP code not found. Try another.');
     const zd=await zr.json();
     const lat=parseFloat(zd.places[0].latitude);
     const lon=parseFloat(zd.places[0].longitude);
     _city=zd.places[0]['place name']+', '+zd.places[0]['state abbreviation'];
 
-    // Open-Meteo
-    const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}`
-      +`&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_gusts_10m,weather_code,visibility`
-      +`&hourly=temperature_2m,wind_speed_10m,wind_gusts_10m,precipitation_probability,weather_code,uv_index`
-      +`&daily=weather_code,wind_speed_10m_max,wind_gusts_10m_max,precipitation_probability_max,temperature_2m_min,temperature_2m_max,uv_index_max`
-      +`&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=2`;
+    // Fetch forecast + past 7 days for rainfall history and soil moisture
+    const today=new Date();
+    const pastDate=new Date(today); pastDate.setDate(today.getDate()-7);
+    const pad=n=>String(n).padStart(2,'0');
+    const fmtDate=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 
-    const wr=await fetch(url);
-    if(!wr.ok) throw new Error('Weather service unavailable. Try again shortly.');
+    const url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon
+      +'&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_gusts_10m,weather_code,visibility,soil_moisture_0_to_1cm'
+      +'&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_gusts_10m,precipitation_probability,weather_code,uv_index'
+      +'&daily=weather_code,wind_speed_10m_max,wind_gusts_10m_max,precipitation_probability_max,'
+      +'temperature_2m_min,temperature_2m_max,uv_index_max,precipitation_sum,et0_fao_evapotranspiration'
+      +'&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=7&past_days=7';
+
+    // Fetch weather + air quality in parallel
+    const aqUrl='https://air-quality-api.open-meteo.com/v1/air-quality?latitude='+lat+'&longitude='+lon
+      +'&hourly=pm2_5,us_aqi,uv_index&timezone=auto&forecast_days=2';
+
+    const [wr, aqr] = await Promise.all([fetch(url), fetch(aqUrl).catch(()=>null)]);
+    if(!wr.ok)throw new Error('Weather service unavailable. Try again shortly.');
     const w=await wr.json();
+    const aq=aqr&&aqr.ok?await aqr.json():null;
 
     const cur=w.current;
     const hourly=w.hourly;
@@ -293,19 +518,42 @@ async function go(){
       gust:Math.round(cur.wind_gusts_10m),
       humidity:Math.round(cur.relative_humidity_2m),
       visibility:cur.visibility!=null?Math.round(cur.visibility/1609):null,
-      code:cur.weather_code
+      code:cur.weather_code,
+      soilMoisture:cur.soil_moisture_0_to_1cm!=null?cur.soil_moisture_0_to_1cm:null
     };
 
-    // Next 24h
+    // Past 7 days rainfall and evapotranspiration from daily data
+    const todayIdx=daily.time.findIndex(t=>t===fmtDate(today));
+    const pastSlice=todayIdx>0?daily.precipitation_sum.slice(0,todayIdx):[];
+    const etSlice=todayIdx>0?(daily.et0_fao_evapotranspiration||[]).slice(0,todayIdx):[];
+    // Last 3 days rain (inches, converted from mm)
+    const last3Rain=pastSlice.slice(-3).reduce((s,v)=>s+(v||0),0)*0.0394;
+    const last7Rain=pastSlice.slice(-7).reduce((s,v)=>s+(v||0),0)*0.0394;
+    // Net water balance last 3 days: rain minus evapotranspiration (mm->inches)
+    const last3ET=etSlice.slice(-3).reduce((s,v)=>s+(v||0),0)*0.0394;
+    const waterBalance=last3Rain-last3ET; // positive = soil has water, negative = drying out
+
     const now=new Date();
+    // Build AQI lookup by hour string
+    const aqiByHour={};
+    if(aq&&aq.hourly){
+      aq.hourly.time.forEach((t,i)=>{
+        aqiByHour[t]={aqi:aq.hourly.us_aqi[i],pm25:aq.hourly.pm2_5[i]};
+      });
+    }
+
     const next24=hourly.time.map((t,i)=>({
       time:new Date(t),
+      timeStr:t,
       wind:hourly.wind_speed_10m[i],
       gust:hourly.wind_gusts_10m[i],
       precip:hourly.precipitation_probability[i],
       code:hourly.weather_code[i],
       temp:Math.round(hourly.temperature_2m[i]),
-      uv:hourly.uv_index[i]
+      humidity:Math.round(hourly.relative_humidity_2m[i]),
+      uv:hourly.uv_index[i],
+      aqi:aqiByHour[t]?aqiByHour[t].aqi:null,
+      pm25:aqiByHour[t]?aqiByHour[t].pm25:null
     })).filter(h=>h.time>=now).slice(0,24);
 
     const maxWind=Math.round(Math.max(...next24.map(h=>h.wind||0)));
@@ -313,20 +561,19 @@ async function go(){
     const maxPrecipPct=Math.max(...next24.map(h=>h.precip||0));
     const minTemp=Math.round(Math.min(...next24.map(h=>h.temp)));
     const codes=next24.map(h=>h.code);
-    const thunder=codes.some(c=>[95,96,99].includes(c));
-    const hail=codes.some(c=>[96,99].includes(c));
-    const heavyRain=codes.some(c=>[65,82].includes(c));
+    const thunder=codes.some(x=>[95,96,99].includes(x));
+    const hail=codes.some(x=>[96,99].includes(x));
+    const heavyRain=codes.some(x=>[65,82].includes(x));
     const severe=thunder||hail;
-    const f={maxWind,maxGust,maxPrecipPct,minTemp,thunder,hail,heavyRain,severe};
+    const f={maxWind,maxGust,maxPrecipPct,minTemp,thunder,hail,heavyRain,severe,
+      soilMoisture:c.soilMoisture,last3Rain,last7Rain,waterBalance};
 
-    // UV max today
     const uvMax=daily.uv_index_max[0]||0;
-    const currentUV=next24[0]?.uv||0;
 
-    document.getElementById('locn').textContent=`${_city} ${zip}`;
+    document.getElementById('locn').textContent=_city+' '+zip;
     document.getElementById('loc').style.display='flex';
 
-    // --- Render alerts ---
+    // Alerts today
     const ac=document.getElementById('alerts');
     ac.innerHTML='';
     const activeAlerts=[];
@@ -334,69 +581,63 @@ async function go(){
       if(!rule.check(c,f))return;
       activeAlerts.push(rule);
       const d=document.createElement('div');
-      d.className=`card ${rule.level}`;
-      d.innerHTML=`<i class="ti ${rule.icon} ci ${rule.level}"></i><div style="flex:1">
-        <div class="ct">${rule.title}</div>
-        <div class="cd">${rule.desc(c,f)}</div>
-        ${rule.action?`<div class="ca ${rule.level}"><i class="ti ti-arrow-right"></i> ${rule.action}</div>`:''}
-      </div>`;
+      d.className='card '+rule.level;
+      d.innerHTML='<i class="ti '+rule.icon+' ci '+rule.level+'"></i><div style="flex:1">'
+        +'<div class="ct">'+rule.title+'</div>'
+        +'<div class="cd">'+rule.desc(c,f)+'</div>'
+        +(rule.action?'<div class="ca '+rule.level+'"><i class="ti ti-arrow-right"></i> '+rule.action+'</div>':'')
+        +'</div>';
       ac.appendChild(d);
     });
 
-    // --- Build send message ---
-    buildSendMessage(c,f,uvMax,activeAlerts,zip);
+    // Watering recommendation bubble — always shows today + tomorrow
+    renderWateringRec(c,f,daily);
 
-    // --- Conditions grid ---
-    const [wDesc]=wmoInfo(c.code);
+    buildSendMessage(c,f,uvMax,activeAlerts,zip,daily);
+    renderSoilContext(f);
+    render7Day(daily);
+
+    // Conditions
+    const[wDesc]=wmoInfo(c.code);
     document.getElementById('conds').innerHTML=[
-      {l:'Temperature',i:'ti-thermometer',v:c.temp,u:'°F'},
+      {l:'Temperature',i:'ti-thermometer',v:c.temp,u:'F'},
       {l:'Wind speed',i:'ti-wind',v:c.wind,u:' mph'},
       {l:'Wind gusts',i:'ti-tornado',v:c.gust,u:' mph'},
       {l:'Rain chance',i:'ti-cloud-rain',v:maxPrecipPct,u:'%'},
       {l:'Humidity',i:'ti-droplet',v:c.humidity,u:'%'},
       {l:'Conditions',i:'ti-cloud',v:wDesc,u:'',sm:true},
-    ].map(m=>`<div class="met">
-      <div class="ml"><i class="ti ${m.i}" style="font-size:12px"></i> ${m.l}</div>
-      <div class="mv${m.sm?' sm':''}">${m.v}<span class="mu">${m.u}</span></div>
-    </div>`).join('');
+    ].map(m=>'<div class="met"><div class="ml"><i class="ti '+m.i+'" style="font-size:12px"></i> '+m.l+'</div>'
+      +'<div class="mv'+(m.sm?' sm':'')+'">'+m.v+'<span class="mu">'+m.u+'</span></div></div>').join('');
 
-    // --- UV section ---
-    const [uvLbl,uvLvl]=uvLabel(uvMax);
+    // UV
+    const[uvLbl,uvLvl]=uvLabel(uvMax);
     const uvPct=Math.min(uvMax/12*100,100);
-    document.getElementById('uvSection').innerHTML=`
-      <div class="card ${uvLvl}" style="flex-direction:column;gap:8px">
-        <div style="display:flex;align-items:center;gap:12px">
-          <i class="ti ti-sun ci ${uvLvl}" style="font-size:28px"></i>
-          <div>
-            <div class="ct">UV Index: ${uvMax.toFixed(1)} — <span style="color:var(--${uvLvl==='D'?'danger':uvLvl==='W'?'warn':'good'}-tx)">${uvLbl}</span></div>
-            <div class="cd">${uvAdvice(uvMax)}</div>
-          </div>
-        </div>
-        <div style="padding:0 4px">
-          <div class="uv-bar"><div class="uv-dot" style="left:${uvPct}%"></div></div>
-          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:4px">
-            <span>0 Low</span><span>3</span><span>6</span><span>8</span><span>11+ Extreme</span>
-          </div>
-        </div>
-      </div>`;
+    document.getElementById('uvSection').innerHTML='<div class="card '+uvLvl+'" style="flex-direction:column;gap:8px">'
+      +'<div style="display:flex;align-items:center;gap:12px">'
+      +'<i class="ti ti-sun ci '+uvLvl+'" style="font-size:28px"></i>'
+      +'<div><div class="ct">UV Index: '+uvMax.toFixed(1)+' - '+uvLbl+'</div><div class="cd">'+uvAdvice(uvMax)+'</div></div>'
+      +'</div>'
+      +'<div style="padding:0 4px"><div class="uv-bar"><div class="uv-dot" style="left:'+uvPct+'%"></div></div>'
+      +'<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:4px">'
+      +'<span>0 Low</span><span>3</span><span>6</span><span>8</span><span>11+ Extreme</span></div></div></div>';
 
-    // --- Best walk times ---
-    renderWalkTimes(next24,f);
+    renderWalkTimes(next24);
 
-    // --- Hourly chips ---
+    // Hourly chips
     document.getElementById('hourly').innerHTML=next24.slice(0,12).map(h=>{
       const hr=h.time.getHours();
-      const lbl=hr===0?'12 AM':hr<12?`${hr} AM`:hr===12?'12 PM':`${hr-12} PM`;
-      const [,ico]=wmoInfo(h.code);
-      const isWalk=isGoodWalkHour(h,f);
+      const lbl=hr===0?'12 AM':hr<12?hr+' AM':hr===12?'12 PM':(hr-12)+' PM';
+      const[,ico]=wmoInfo(h.code);
+      const score=walkComfortScore(h);
+      const isWalk=score>0;
       const cls=[95,96,99].includes(h.code)?'D':(h.gust>30||h.wind>25)?'W':isWalk?'WALK':'';
-      return `<div class="hchip ${cls}">
-        <div class="ht">${lbl}</div>
-        <div class="hi"><i class="ti ${ico}"></i></div>
-        <div class="htemp">${h.temp}°</div>
-        <div class="hw">${Math.round(h.wind)} mph</div>
-        ${isWalk?'<div class="walk-badge">Walk</div>':''}
-      </div>`;
+      return '<div class="hchip '+cls+'">'
+        +'<div class="ht">'+lbl+'</div>'
+        +'<div class="hi"><i class="ti '+ico+'"></i></div>'
+        +'<div class="htemp">'+h.temp+'F</div>'
+        +'<div class="hw">'+Math.round(h.wind)+' mph</div>'
+        +(isWalk?'<div class="walk-badge">Walk</div>':'')
+        +'</div>';
     }).join('');
 
     document.getElementById('main').style.display='block';
@@ -411,100 +652,421 @@ async function go(){
   }
 }
 
-function isGoodWalkHour(h, f){
-  if([95,96,99,65,82].includes(h.code)) return false;
-  if(h.gust>25||h.wind>20) return false;
-  if(h.precip>50) return false;
-  if(h.temp<28||h.temp>95) return false;
-  if(h.uv>8) return false;
-  return true;
+function wateringRecommendation(c, f, daily, dayOffset){
+  // Returns {level, headline, detail} for today (0) or tomorrow (1)
+  const sm = dayOffset===0 ? c.soilMoisture : null; // only have live sensor for today
+  const r3 = f.last3Rain || 0;
+  const r7 = f.last7Rain || 0;
+
+  let precip, thunder, heavyRain, code, hi, lo;
+  if(daily && daily.time && daily.time.length > dayOffset){
+    const todayStr = new Date().toISOString().slice(0,10);
+    const startIdx = daily.time.findIndex(t=>t>=todayStr);
+    const idx = (startIdx>=0?startIdx:0) + dayOffset;
+    precip    = daily.precipitation_probability_max[idx] || 0;
+    code      = daily.weather_code[idx];
+    hi        = Math.round(daily.temperature_2m_max[idx]);
+    lo        = Math.round(daily.temperature_2m_min[idx]);
+    thunder   = [95,96,99].includes(code);
+    heavyRain = [65,82].includes(code);
+  } else {
+    precip=f.maxPrecipPct; thunder=f.thunder; heavyRain=f.heavyRain;
+    hi=f.minTemp+15; lo=f.minTemp;
+  }
+
+  const bonedrySoil = dayOffset===0 && (sm===0||sm===null||sm===undefined||sm<0.08);
+  const drySoil     = dayOffset===0 && (sm===null||sm===undefined||sm===0||sm<0.15);
+  const moistSoil   = dayOffset===0 && sm!=null && sm>=0.25;
+  const recentRain  = r3 > 0.5;
+  const rainStrong  = thunder || heavyRain || precip>=70;
+  const rainDecent  = precip>=45 && precip<70;
+  const rainLight   = precip>=20 && precip<45;
+  const noRain      = precip<20 && !thunder && !heavyRain;
+
+  // Tomorrow uses forecast only (no soil sensor)
+  if(dayOffset===1){
+    if(rainStrong)  return{level:'G',icon:'ti-droplet',headline:'Skip watering tomorrow',detail:thunder?'Storms expected — ground will get plenty of water':'Heavy/likely rain ('+precip+'%) — skip watering, let rain do it'};
+    if(rainDecent)  return{level:'W',icon:'ti-droplet-half',headline:'Probably skip watering tomorrow',detail:'Decent rain chance ('+precip+'%) — likely enough, but water tonight if soil feels dry'};
+    if(rainLight)   return{level:'W',icon:'ti-droplet-half',headline:'Consider watering tomorrow',detail:'Light rain possible ('+precip+'%) — not enough to rely on, plan to water'};
+    return{level:'D',icon:'ti-droplet-filled',headline:'Water tomorrow',detail:'No rain expected — plan to water lawn and beds'+(r7<0.1?' (dry week, plants need it)':'')};
+  }
+
+  // Today — use soil moisture + recent rain + forecast
+  if(bonedrySoil && noRain)     return{level:'D',icon:'ti-droplet-filled',headline:'Must water today',detail:'Soil is bone dry'+(r7<0.1?' with no rain in 7 days':'')+' and no rain coming — water lawn, beds, and pots now'};
+  if(drySoil && noRain)         return{level:'D',icon:'ti-droplet-filled',headline:'Water today',detail:'Soil is dry'+(r7<0.25?' and little recent rain':'')+' — water before it gets worse'};
+  if(drySoil && rainLight)      return{level:'W',icon:'ti-droplet-half',headline:'Light rain may not be enough',detail:'Soil is dry and only '+precip+'% rain chance — water lightly or wait to see if rain arrives'};
+  if(drySoil && rainDecent)     return{level:'W',icon:'ti-droplet-half',headline:'Hold off — decent rain coming',detail:'Soil dry but '+precip+'% rain chance — give it a few hours before watering'};
+  if(drySoil && rainStrong)     return{level:'G',icon:'ti-droplet',headline:'Skip watering — rain coming',detail:'Soil is dry but strong rain expected ('+precip+'%) — let it rain first, water after if needed'};
+  if(moistSoil && rainStrong)   return{level:'G',icon:'ti-droplet',headline:'Definitely skip watering',detail:'Soil is moist + rain coming ('+precip+'%) — ground has more than enough'};
+  if(moistSoil || recentRain)   return{level:'G',icon:'ti-droplet',headline:'Skip watering today',detail:(moistSoil?'Soil moisture is good':'Recent rain ('+r3.toFixed(2)+'" in 3 days)')+(rainDecent?' + rain possible ('+precip+'%)':'')+' — no watering needed'};
+  if(rainStrong)                return{level:'G',icon:'ti-droplet',headline:'Skip watering — rain today',detail:thunder?'Storms coming — skip watering entirely':'Heavy rain likely ('+precip+'%) — skip watering today'};
+  if(rainDecent)                return{level:'W',icon:'ti-droplet-half',headline:'Probably skip watering',detail:'Decent rain chance ('+precip+'%) — check soil this afternoon before deciding'};
+  // Fallback — adequate soil, light or no rain
+  if(rainLight) return{level:'W',icon:'ti-droplet-half',headline:'Light rain possible — monitor',detail:precip+'% rain chance — water if it misses your area'};
+  return{level:'W',icon:'ti-droplet-half',headline:'Water if soil feels dry',detail:'No strong signals either way — check soil moisture and water if needed'};
 }
 
-function renderWalkTimes(next24, f){
-  const goodHours=next24.filter(h=>isGoodWalkHour(h,f));
+function renderWateringRec(c, f, daily){
+  const el=document.getElementById('wateringRec');
+  if(!el) return;
+
+  const today=wateringRecommendation(c,f,daily,0);
+  const tmr=wateringRecommendation(c,f,daily,1);
+
+  const levelColors={
+    D:{bg:'var(--danger-bg)',bd:'var(--danger-bd)',tx:'var(--danger-tx)'},
+    W:{bg:'var(--warn-bg)',bd:'var(--warn-bd)',tx:'var(--warn-tx)'},
+    G:{bg:'var(--good-bg)',bd:'var(--good-bd)',tx:'var(--good-tx)'}
+  };
+
+  const makeHalf=(rec,label)=>{
+    const col=levelColors[rec.level];
+    return '<div style="flex:1;min-width:140px;background:'+col.bg+';border:1px solid '+col.bd
+      +';border-radius:var(--rs);padding:10px 12px">'
+      +'<div style="font-size:10px;font-weight:700;color:'+col.tx+';text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">'+label+'</div>'
+      +'<div style="display:flex;align-items:flex-start;gap:8px">'
+      +'<i class="ti '+rec.icon+'" style="font-size:20px;color:'+col.tx+';flex-shrink:0;margin-top:1px"></i>'
+      +'<div>'
+      +'<div style="font-size:13px;font-weight:600;color:var(--text);line-height:1.3">'+rec.headline+'</div>'
+      +'<div style="font-size:11px;color:var(--text2);margin-top:3px;line-height:1.4">'+rec.detail+'</div>'
+      +'</div></div></div>';
+  };
+
+  el.innerHTML='<div style="margin-top:8px">'
+    +'<div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">💧 Watering recommendation</div>'
+    +'<div style="display:flex;gap:8px;flex-wrap:wrap">'
+    +makeHalf(today,'Today')
+    +makeHalf(tmr,'Tomorrow')
+    +'</div></div>';
+}
+
+function render7Day(daily){
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const el=document.getElementById('forecast7');
+  el.innerHTML='';
+  const todayStr=new Date().toISOString().slice(0,10);
+  const startIdx=daily.time.findIndex(t=>t>=todayStr);
+  const sliceStart=startIdx>=0?startIdx:0;
+  daily.time.slice(sliceStart).forEach((dateStr,ii)=>{
+    const i=sliceStart+ii;
+    const d=new Date(dateStr+'T12:00:00');
+    const isToday=ii===0;
+    const dayLabel=isToday?'Today':days[d.getDay()];
+    const dateLabel=months[d.getMonth()]+' '+d.getDate();
+    const code=daily.weather_code[i];
+    const[desc,ico]=wmoInfo(code);
+    const hi=Math.round(daily.temperature_2m_max[i]);
+    const lo=Math.round(daily.temperature_2m_min[i]);
+    const precip=daily.precipitation_probability_max[i]||0;
+    const maxWind=Math.round(daily.wind_speed_10m_max[i]||0);
+    const maxGust=Math.round(daily.wind_gusts_10m_max[i]||0);
+    const thunder=[95,96,99].includes(code);
+    const hail=[96,99].includes(code);
+    const heavyRain=[65,82].includes(code);
+    const severe=thunder||hail;
+    const freeze=lo<=32;
+    const dayData={maxWind,maxGust,maxPrecip:precip,minTemp:lo,thunder,hail,heavyRain,severe};
+    const{worstLevel}=evalDay(dayData);
+
+    const actions=[];
+    if(thunder||hail||maxGust>30) actions.push({level:'D',emoji:'🪑',text:'Cover and bring in patio furniture'+(maxGust>30?' - gusts up to '+maxGust+' mph':'')+(thunder?' - thunderstorms expected':'')});
+    if(hail||severe) actions.push({level:'D',emoji:'🚗',text:'Move cars into the garage - hail possible'});
+    if(freeze) actions.push({level:'D',emoji:'🌿',text:'Protect plants and bring in pots - low of '+lo+'F (freezing)'});
+    if(maxGust>25&&!thunder&&!hail) actions.push({level:'W',emoji:'💨',text:'Take down patio umbrella - gusts to '+maxGust+' mph'});
+    else if(maxWind>20&&maxGust<=25&&!thunder) actions.push({level:'W',emoji:'💨',text:'Secure lightweight items outside - winds '+maxWind+' mph'});
+    if(precip>60) actions.push({level:'W',emoji:'💧',text:'Skip watering the lawn - '+precip+'% chance of rain'});
+    else if(precip>30&&precip<=60) actions.push({level:'W',emoji:'🌧',text:'Watch rain forecast - '+precip+'% chance, may not need to water'});
+
+    const actionsHTML=actions.length
+      ?'<div class="fc-actions">'+actions.map(a=>'<div class="fc-action-item '+a.level+'"><span>'+a.emoji+'</span><span>'+a.text+'</span></div>').join('')+'</div>'
+      :'<div class="fc-actions"><div class="fc-action-item G"><span>✅</span><span>No yard action needed - enjoy the day</span></div></div>';
+
+    const row=document.createElement('div');
+    row.className='forecast-row '+worstLevel+(isToday?' today':'');
+    row.innerHTML='<div class="fc-top">'
+      +'<div class="fc-day">'+dayLabel+'</div>'
+      +'<div class="fc-date">'+dateLabel+'</div>'
+      +'<div class="fc-icon"><i class="ti '+ico+'"></i></div>'
+      +'<div class="fc-desc">'+desc+(precip>20?' - '+precip+'% rain':'')+'</div>'
+      +'<div class="fc-temps">'+hi+'F <span>/ '+lo+'F</span></div>'
+      +'<div class="fc-dot '+worstLevel+'"></div>'
+      +'</div>'+actionsHTML;
+    el.appendChild(row);
+  });
+}
+
+function renderWalkTimes(next24){
   const el=document.getElementById('walkTimes');
-  if(!goodHours.length){
-    el.innerHTML=`<div class="card W"><i class="ti ti-walk ci W"></i><div><div class="ct">No ideal walk times today</div><div class="cd">Conditions include wind, rain, extreme temps, or high UV. Plan for tomorrow or walk early morning.</div></div></div>`;
+
+  // Score every hour using the full Walk Index
+  const scored=next24.map(h=>{
+    const idx=yardGuardianWalkIndex(h);
+    return{...h,...idx};
+  }).filter(h=>h.score>0);
+
+  if(!scored.length){
+    el.innerHTML='<div class="card W" style="flex-direction:column">'
+      +'<div style="display:flex;align-items:center;gap:12px"><i class="ti ti-walk ci W" style="font-size:22px;flex-shrink:0"></i>'
+      +'<div><div class="ct">No safe walk windows today</div>'
+      +'<div class="cd">Conditions are too hot, humid, rainy, high UV, or poor air quality for little ones. Try early morning tomorrow.</div></div></div></div>';
     return;
   }
-  // Group into windows
-  const windows=[];
-  let wStart=goodHours[0],wEnd=goodHours[0];
-  for(let i=1;i<goodHours.length;i++){
-    const gap=(goodHours[i].time-goodHours[i-1].time)/3600000;
-    if(gap<=1){wEnd=goodHours[i];}
-    else{windows.push({start:wStart,end:wEnd});wStart=goodHours[i];wEnd=goodHours[i];}
-  }
-  windows.push({start:wStart,end:wEnd});
 
-  const fmt=t=>{const h=t.getHours();return h===0?'12 AM':h<12?`${h} AM`:h===12?'12 PM':`${h-12} PM`;};
-  const top3=windows.slice(0,3);
-  el.innerHTML=top3.map(w=>{
-    const same=w.start.time===w.end.time;
-    const range=same?fmt(w.start.time):`${fmt(w.start.time)} – ${fmt(w.end.time)}`;
-    const avgTemp=Math.round((w.start.temp+w.end.temp)/2);
-    const avgWind=Math.round((w.start.wind+w.end.wind)/2);
-    return `<div class="card G">
-      <i class="ti ti-walk ci G" style="font-size:22px"></i>
-      <div>
-        <div class="ct">${range}</div>
-        <div class="cd">${avgTemp}°F · ${avgWind} mph wind · ${wmoInfo(w.start.code)[0]}</div>
-      </div>
-    </div>`;
+  // Each hour = a potential 30-min window (we pick the best individual hours, not blobs)
+  // Sort all eligible hours by score descending, pick top 3, then display chronologically
+  const top3hours = scored
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,3)
+    .sort((a,b)=>a.time-b.time);
+
+  const fmt=t=>{
+    const h=t.getHours();
+    const m=t.getMinutes();
+    const base=h===0?'12':h<=12?String(h):String(h-12);
+    const suffix=h<12?'AM':'PM';
+    return base+(m?':'+String(m).padStart(2,'0'):'')+' '+suffix;
+  };
+  const fmt30=t=>{
+    // Show :00 - :30 window
+    const end=new Date(t.getTime()+30*60000);
+    return fmt(t)+' - '+fmt(end);
+  };
+
+  const factorBar=(score,label,icon)=>{
+    const pct=Math.round(score);
+    const col=score>=75?'#16a34a':score>=50?'#ca8a04':'#b91c1c';
+    return '<div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">'
+      +'<i class="ti '+icon+'" style="font-size:11px;color:var(--text3);width:14px;flex-shrink:0"></i>'
+      +'<div style="font-size:10px;color:var(--text3);width:56px;flex-shrink:0">'+label+'</div>'
+      +'<div style="flex:1;height:5px;background:var(--metric-bg);border-radius:3px;overflow:hidden">'
+      +'<div style="width:'+pct+'%;height:100%;background:'+col+';border-radius:3px"></div></div>'
+      +'<div style="font-size:10px;color:'+col+';width:28px;text-align:right;font-weight:600;flex-shrink:0">'+pct+'</div>'
+      +'</div>';
+  };
+
+  const medals=['🥇','🥈','🥉'];
+
+  el.innerHTML=top3hours.map((h,i)=>{
+    const g=walkGradeLabel(h.score);
+    const range=fmt30(h.time);
+    const feelsStr=h.feelsLike&&h.feelsLike>h.temp+3?' / Feels '+h.feelsLike+'F':'';
+    const aqLabel=h.aqi&&h.aqi.label?h.aqi.label:(h.aqi&&h.aqi.score!==undefined?'AQI ~good':'Unknown');
+
+    return '<div style="border-radius:var(--r);border:1px solid '+g.bd
+      +';background:'+g.bg+';padding:1rem 1.25rem;margin-bottom:10px">'
+
+      // Header row: medal + time + grade badge
+      +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">'
+      +'<span style="font-size:22px">'+medals[i]+'</span>'
+      +'<div style="flex:1">'
+      +'<div style="font-size:15px;font-weight:700;color:var(--text)">'+range+'</div>'
+      +'<div style="font-size:12px;color:var(--text2);margin-top:1px">'+h.temp+'F'+feelsStr+' &nbsp;·&nbsp; '+h.humidity+'% humidity &nbsp;·&nbsp; '+(h.wind||0)+' mph wind</div>'
+      +'</div>'
+      +'<div style="text-align:center;flex-shrink:0">'
+      +'<div style="font-size:24px;font-weight:800;color:'+g.color+'">'+g.grade+'</div>'
+      +'<div style="font-size:10px;font-weight:600;color:'+g.color+'">'+g.label+'</div>'
+      +'</div></div>'
+
+      // Factor breakdown bars
+      +'<div style="border-top:1px solid '+g.bd+';padding-top:8px">'
+      +'<div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Walk Index Breakdown</div>'
+      +factorBar(h.uv.score,    'UV Safety',  'ti-sun')
+      +factorBar(h.temp.score,  'Temp/Heat',  'ti-thermometer')
+      +factorBar(h.humidity.score,'Humidity', 'ti-droplet')
+      +factorBar(h.aqi.score,   'Air Quality','ti-leaf')
+      +factorBar(h.wind.score,  'Wind',       'ti-wind')
+      +factorBar(h.sky.score,   'Sky/Shade',  'ti-cloud-sun')
+      +factorBar(h.tod.score,   'Time of Day','ti-clock')
+      +'<div style="margin-top:6px;font-size:11px;font-weight:600;color:'+g.color+'">'
+      +'Yard Guardian Walk Index: '+h.score+'/100'
+      +'</div></div></div>';
   }).join('');
 }
 
-function buildSendMessage(c,f,uvMax,activeAlerts,zip){
-  const [uvLbl]=uvLabel(uvMax);
-  const lines=[`🌿 Yard Guardian — ${_city}`,''];
+function soilMoistureLabel(sm){
+  // sm is volumetric soil moisture 0-1 (fraction)
+  // Treat 0 the same as truly dry — open-meteo returns 0 in drought conditions
+  if(sm===null||sm===undefined) return{label:'Dry',color:'var(--danger-tx)',advice:'Soil is very dry — water today regardless of forecast'};
+  if(sm===0)                    return{label:'Bone dry',color:'var(--danger-tx)',advice:'Extremely dry — drought-like conditions, water now'};
+  if(sm>=0.35) return{label:'Saturated',color:'var(--info-tx)',advice:'Ground is very wet — definitely skip watering'};
+  if(sm>=0.25) return{label:'Moist',color:'var(--good-tx)',advice:'Soil has good moisture — no watering needed'};
+  if(sm>=0.15) return{label:'Adequate',color:'var(--good-tx)',advice:'Soil moisture is OK — water only if no rain coming'};
+  if(sm>=0.08) return{label:'Getting dry',color:'var(--warn-tx)',advice:'Soil drying out — water if no rain in 24 hrs'};
+  return{label:'Dry',color:'var(--danger-tx)',advice:'Soil is dry — water soon regardless of forecast'};
+}
 
-  if(activeAlerts.length===1&&activeAlerts[0].level==='G'){
-    lines.push('✅ All clear! Great day to be outside.');
+function renderSoilContext(f){
+  const el=document.getElementById('soilContext');
+  if(!el) return;
+
+  // Always show the panel — even zeros and nulls get a clear message
+  const sm=soilMoistureLabel(f.soilMoisture);  // never returns null now
+  const r3=typeof f.last3Rain==='number'?f.last3Rain:0;
+  const r7=typeof f.last7Rain==='number'?f.last7Rain:0;
+  const wb=typeof f.waterBalance==='number'?f.waterBalance:null;
+
+  // Pick card color based on soil state
+  const cardClass=sm.label==='Saturated'?'I':
+    (sm.label==='Moist'||sm.label==='Adequate')?'G':
+    'D';
+
+  let html='<div class="card '+cardClass+'" style="flex-direction:column;gap:10px;align-items:stretch">';
+  html+='<div style="display:flex;gap:12px;flex-wrap:wrap">';
+
+  // Soil moisture — always shown
+  html+='<div style="flex:1;min-width:130px">'
+    +'<div class="ml"><i class="ti ti-leaf" style="font-size:12px"></i> Soil moisture now</div>'
+    +'<div style="font-size:16px;font-weight:700;color:'+sm.color+';margin-top:4px">'+sm.label+'</div>'
+    +'<div style="font-size:11px;color:var(--text2);margin-top:2px">'+sm.advice+'</div>'
+    +'</div>';
+
+  // Recent rainfall — always shown, even if zero
+  const r3Str=r3===0?'None':r3.toFixed(2)+'"';
+  const r7Str=r7===0?'None':r7.toFixed(2)+'"';
+  const r3Color=r3===0?'var(--danger-tx)':r3<0.25?'var(--warn-tx)':'var(--text)';
+  html+='<div style="flex:1;min-width:130px">'
+    +'<div class="ml"><i class="ti ti-cloud-rain" style="font-size:12px"></i> Recent rainfall</div>'
+    +'<div style="font-size:16px;font-weight:700;color:'+r3Color+';margin-top:4px">'+r3Str+'</div>'
+    +'<div style="font-size:11px;color:var(--text2);margin-top:2px">last 3 days &nbsp;·&nbsp; '+r7Str+' last 7 days</div>'
+    +'</div>';
+
+  // Water balance — always shown if we have ET data
+  if(wb!==null){
+    const wbLabel=wb>0.1?'Surplus — hold off watering':wb<-0.1?'Deficit — ground losing moisture':'About even';
+    const wbColor=wb>0.1?'var(--good-tx)':wb<-0.1?'var(--warn-tx)':'var(--text3)';
+    html+='<div style="flex:1;min-width:130px">'
+      +'<div class="ml"><i class="ti ti-droplet-half" style="font-size:12px"></i> Water balance (3 days)</div>'
+      +'<div style="font-size:16px;font-weight:700;color:'+wbColor+';margin-top:4px">'+(wb>=0?'+':'')+wb.toFixed(2)+'"</div>'
+      +'<div style="font-size:11px;color:var(--text2);margin-top:2px">'+wbLabel+'</div>'
+      +'</div>';
+  }
+
+  // Drought callout if bone dry + no rain
+  if((sm.label==='Bone dry'||sm.label==='Dry')&&r7<0.1){
+    html+='</div>'
+      +'<div style="font-size:12px;font-weight:600;color:var(--danger-tx);padding:6px 0 0 0;border-top:1px solid var(--danger-bd)">'
+      +'⚠️ Drought-like conditions — little to no rainfall in 7 days. Water plants and lawn regularly.'
+      +'</div>';
   } else {
-    activeAlerts.forEach(a=>{
-      const emoji=a.level==='D'?'🚨':a.level==='W'?'⚠️':'✅';
-      lines.push(`${emoji} ${a.title}`);
-      if(a.action) lines.push(`   → ${a.action}`);
+    html+='</div>';
+  }
+
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+function rainSummary(precip, thunder, heavyRain, soilMoisture, last3Rain){
+  // Returns a concise rain note factoring in soil moisture and recent rain
+  const sm=soilMoistureLabel(soilMoisture);
+  const alreadyWet=last3Rain>0.5||(sm&&['Saturated','Moist'].includes(sm.label));
+  const soilDry=sm&&sm.label==='Dry';
+
+  if(thunder) return '⛈️ Storms likely - stay inside, skip watering';
+  if(heavyRain) return '🌧️ Heavy rain coming - skip watering'+(alreadyWet?' (ground already wet)':'');
+  if(precip>=70){
+    if(alreadyWet) return '🌧️ Rain very likely ('+precip+'%) + ground already wet - definitely skip watering';
+    return '🌧️ Rain very likely ('+precip+'%) - skip watering today';
+  }
+  if(precip>=50){
+    if(alreadyWet) return '🌦️ Decent rain chance ('+precip+'%) + recent rainfall - skip watering';
+    return '🌦️ Decent rain chance ('+precip+'%) - probably fine to skip watering';
+  }
+  if(precip>=30){
+    if(soilDry) return '🌦️ Some rain possible ('+precip+'%) but soil is dry - water lightly or wait for rain';
+    if(alreadyWet) return '🌦️ Light rain possible ('+precip+'%) - ground still moist, skip watering';
+    return '🌦️ Some rain possible ('+precip+'%) - light shower chance, keep an eye out';
+  }
+  if(precip>=15){
+    if(soilDry) return '🌤️ Slight rain chance ('+precip+'%) - soil is dry, plan to water today';
+    return '🌤️ Slight rain chance ('+precip+'%) - likely fine, probably good to water';
+  }
+  // No rain coming
+  if(soilDry) return '☀️ No rain coming + soil is dry - water today';
+  if(alreadyWet) return '☀️ No rain today - ground still moist from recent rain, hold off';
+  return '';
+}
+
+function buildSendMessage(c,f,uvMax,activeAlerts,zip,daily){
+  const[uvLbl]=uvLabel(uvMax);
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  const lines=['🌿 Yard Guardian - '+_city, dateStr,''];
+
+  // Separate yard-action alerts from the all-clear
+  const actionAlerts=activeAlerts.filter(a=>a.level!=='G');
+  const isAllClear=actionAlerts.length===0;
+  const rain=rainSummary(f.maxPrecipPct, f.thunder, f.heavyRain, f.soilMoisture, f.last3Rain);
+
+  lines.push('TODAY:');
+  if(isAllClear){
+    if(rain){
+      // All clear on yard actions but rain is worth knowing about
+      lines.push('✅ Yard is fine - no action needed.');
+      lines.push(rain);
+    } else {
+      lines.push('✅ All clear - great day to be outside!');
+    }
+  } else {
+    actionAlerts.forEach(a=>{
+      const emoji=a.level==='D'?'🚨':'⚠️';
+      lines.push(emoji+' '+a.title);
+      if(a.action) lines.push('   → '+a.action);
     });
+    if(rain) lines.push(rain);
+  }
+  lines.push('🌡 '+c.temp+'F  💨 Wind '+c.wind+' mph / Gusts '+c.gust+' mph');
+  lines.push('☀️ UV Index: '+uvMax.toFixed(1)+' ('+uvLbl+')');
+
+  if(daily&&daily.time&&daily.time.length>1){
+    const tmrDate=new Date(daily.time[1]+'T12:00:00');
+    const tmrName=tmrDate.toLocaleDateString('en-US',{weekday:'long'});
+    const tmrCode=daily.weather_code[1];
+    const[tmrDesc]=wmoInfo(tmrCode);
+    const tmrHi=Math.round(daily.temperature_2m_max[1]);
+    const tmrLo=Math.round(daily.temperature_2m_min[1]);
+    const tmrPrecip=daily.precipitation_probability_max[1]||0;
+    const tmrGust=Math.round(daily.wind_gusts_10m_max[1]||0);
+    const tmrWind=Math.round(daily.wind_speed_10m_max[1]||0);
+    const tmrThunder=[95,96,99].includes(tmrCode);
+    const tmrHail=[96,99].includes(tmrCode);
+    const tmrHeavyRain=[65,82].includes(tmrCode);
+    const tmrFreeze=tmrLo<=32;
+    const tmrRain=rainSummary(tmrPrecip, tmrThunder, tmrHeavyRain, null, null);
+    const tmrActionAlerts=[];
+    if(tmrThunder||tmrHail||tmrGust>30) tmrActionAlerts.push('🚨 🪑 Cover furniture'+(tmrGust>30?' - gusts to '+tmrGust+' mph':'')+(tmrThunder?' - storms':''));
+    if(tmrHail) tmrActionAlerts.push('🚨 🚗 Garage the cars - hail possible');
+    if(tmrFreeze) tmrActionAlerts.push('🚨 🌿 Protect plants - low of '+tmrLo+'F tonight');
+    if(!tmrThunder&&tmrGust>25) tmrActionAlerts.push('⚠️ 💨 Secure outdoor items - gusts to '+tmrGust+' mph');
+    else if(!tmrThunder&&tmrWind>20) tmrActionAlerts.push('⚠️ 💨 Windy - secure light items');
+
+    lines.push('');
+    lines.push('TOMORROW ('+tmrName+'):');
+    lines.push('   '+tmrDesc+' - '+tmrHi+'F/'+tmrLo+'F');
+    if(tmrActionAlerts.length){
+      tmrActionAlerts.forEach(a=>lines.push('   '+a));
+    }
+    if(tmrRain) lines.push('   '+tmrRain);
+    if(!tmrActionAlerts.length&&!tmrRain) lines.push('   ✅ Looks good - no action needed');
   }
   lines.push('');
-  lines.push(`🌡 ${c.temp}°F  💨 ${c.wind} mph gusts ${c.gust} mph`);
-  lines.push(`☀️ UV Index: ${uvMax.toFixed(1)} (${uvLbl})`);
-  lines.push('');
-  lines.push('— via Yard Guardian app');
-
+  lines.push('❤️ Dada loves you - from the Yard Guardian team');
   _alertSummary=lines.join('\n');
   document.getElementById('sendPreview').textContent=_alertSummary;
 }
 
-function sendSMS(){
-  const encoded=encodeURIComponent(_alertSummary);
-  window.location.href=`sms:?body=${encoded}`;
-}
-
+function sendSMS(){window.location.href='sms:?body='+encodeURIComponent(_alertSummary);}
 function copyAlert(){
-  navigator.clipboard.writeText(_alertSummary).then(()=>{
+  const done=()=>{
     const el=document.getElementById('copyConfirm');
     el.style.display='block';
     setTimeout(()=>el.style.display='none',2500);
-  }).catch(()=>{
-    const ta=document.createElement('textarea');
-    ta.value=_alertSummary;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    const el=document.getElementById('copyConfirm');
-    el.style.display='block';
-    setTimeout(()=>el.style.display='none',2500);
-  });
+  };
+  if(navigator.clipboard){navigator.clipboard.writeText(_alertSummary).then(done).catch(fb);}
+  else fb();
+  function fb(){const ta=document.createElement('textarea');ta.value=_alertSummary;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);done();}
 }
-
-function showErr(msg){
-  document.getElementById('etxt').textContent=msg;
-  document.getElementById('err').style.display='flex';
-}
-
+function showErr(msg){document.getElementById('etxt').textContent=msg;document.getElementById('err').style.display='flex';}
 document.getElementById('zip').addEventListener('keydown',e=>{if(e.key==='Enter')go();});
 try{const s=localStorage.getItem('yg_zip');if(s){document.getElementById('zip').value=s;go();}}catch(e){}
 </script>
