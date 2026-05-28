@@ -71,11 +71,40 @@
   .hchip.W{background:var(--warn-bg);border-color:var(--warn-bd)}
   .hchip.D{background:var(--danger-bg);border-color:var(--danger-bd)}
   .hchip.WALK{background:var(--good-bg);border-color:var(--good-bd)}
+  .hchip.UNSAFE{background:var(--danger-bg);border-color:var(--danger-bd)}
   .ht{font-size:11px;color:var(--text3)}
   .hi{font-size:18px;margin:4px 0;color:var(--text)}
   .htemp{font-size:14px;font-weight:600;color:var(--text)}
   .hw{font-size:11px;color:var(--text3);margin-top:2px}
   .walk-badge{font-size:10px;font-weight:700;color:var(--good-tx);margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
+  .unsafe-badge{font-size:9px;font-weight:700;color:var(--danger-tx);margin-top:2px;text-transform:uppercase;letter-spacing:.03em;line-height:1.2}
+  /* BEBE.v2 Walk Index cards - full dark mode support */
+  .walk-card{border-radius:var(--r);border:1px solid var(--border);padding:1rem 1.25rem;margin-bottom:10px;background:var(--card)}
+  .walk-card.walk-a{border-color:var(--good-bd);background:var(--good-bg)}
+  .walk-card.walk-b{border-color:var(--good-bd);background:var(--good-bg)}
+  .walk-card.walk-c{border-color:var(--warn-bd);background:var(--warn-bg)}
+  .walk-card.walk-d{border-color:var(--danger-bd);background:var(--danger-bg)}
+  .walk-card.walk-f{border-color:var(--danger-bd);background:var(--danger-bg)}
+  .walk-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .walk-medal{font-size:22px;flex-shrink:0}
+  .walk-time-block{flex:1;min-width:0}
+  .walk-time{font-size:15px;font-weight:700;color:var(--text)}
+  .walk-detail{font-size:12px;color:var(--text2);margin-top:2px}
+  .walk-grade-badge{text-align:center;flex-shrink:0}
+  .walk-card.walk-a .walk-grade,.walk-card.walk-b .walk-grade{font-size:26px;font-weight:800;color:var(--good-tx)}
+  .walk-card.walk-c .walk-grade{font-size:26px;font-weight:800;color:var(--warn-tx)}
+  .walk-card.walk-d .walk-grade,.walk-card.walk-f .walk-grade{font-size:26px;font-weight:800;color:var(--danger-tx)}
+  .walk-card.walk-a .walk-grade-label,.walk-card.walk-b .walk-grade-label{font-size:10px;font-weight:600;color:var(--good-tx)}
+  .walk-card.walk-c .walk-grade-label{font-size:10px;font-weight:600;color:var(--warn-tx)}
+  .walk-card.walk-d .walk-grade-label,.walk-card.walk-f .walk-grade-label{font-size:10px;font-weight:600;color:var(--danger-tx)}
+  .walk-breakdown{border-top:1px solid var(--border);padding-top:8px}
+  .walk-card.walk-a .walk-breakdown,.walk-card.walk-b .walk-breakdown{border-top-color:var(--good-bd)}
+  .walk-card.walk-c .walk-breakdown{border-top-color:var(--warn-bd)}
+  .walk-card.walk-d .walk-breakdown,.walk-card.walk-f .walk-breakdown{border-top-color:var(--danger-bd)}
+  .walk-breakdown-title{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+  .walk-card.walk-a .walk-index-score,.walk-card.walk-b .walk-index-score{font-size:11px;font-weight:700;color:var(--good-tx);margin-top:6px}
+  .walk-card.walk-c .walk-index-score{font-size:11px;font-weight:700;color:var(--warn-tx);margin-top:6px}
+  .walk-card.walk-d .walk-index-score,.walk-card.walk-f .walk-index-score{font-size:11px;font-weight:700;color:var(--danger-tx);margin-top:6px}
   .empty{border:1.5px dashed var(--border);border-radius:var(--r);padding:3rem 2rem;text-align:center;color:var(--text3);font-size:14px;line-height:1.7}
   .empty i{font-size:36px;display:block;margin-bottom:10px}
   .attr{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:5px;margin-top:1rem}
@@ -88,12 +117,14 @@
   .uv-bar{height:8px;border-radius:4px;margin-top:6px;background:linear-gradient(to right,#84cc16,#eab308,#f97316,#ef4444,#7c3aed);position:relative}
   .uv-dot{width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid #333;position:absolute;top:-2px;transform:translateX(-50%)}
   /* 7-day forecast */
-  .forecast-row{border-radius:var(--rs);background:var(--card);border:1px solid var(--border);margin-bottom:8px;overflow:hidden}
+  .forecast-row{border-radius:var(--rs);background:var(--card);border:1px solid var(--border);margin-bottom:8px;overflow:hidden;transition:box-shadow .15s}
   .forecast-row.today{border-color:var(--blue)}
   .forecast-row.D{border-left:4px solid var(--danger-tx)}
   .forecast-row.W{border-left:4px solid var(--warn-tx)}
   .forecast-row.G{border-left:4px solid var(--good-tx)}
-  .fc-top{display:flex;align-items:center;padding:10px 14px;gap:10px}
+  .fc-top{display:flex;align-items:center;padding:10px 14px;gap:10px;cursor:default}
+  .fc-top.clickable{cursor:pointer;user-select:none}
+  .fc-top.clickable:hover{background:var(--metric-bg)}
   .fc-day{font-size:13px;font-weight:700;color:var(--text);width:38px;flex-shrink:0}
   .fc-date{font-size:11px;color:var(--text3);width:34px;flex-shrink:0}
   .fc-icon{font-size:20px;color:var(--text);width:24px;text-align:center;flex-shrink:0}
@@ -104,11 +135,26 @@
   .fc-dot.D{background:var(--danger-tx)}
   .fc-dot.W{background:var(--warn-tx)}
   .fc-dot.G{background:var(--good-tx)}
-  .fc-actions{padding:0 14px 10px 14px;display:flex;flex-direction:column;gap:4px}
-  .fc-action-item{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500}
-  .fc-action-item.D{color:var(--danger-tx)}
-  .fc-action-item.W{color:var(--warn-tx)}
-  .fc-action-item.G{color:var(--good-tx)}
+  /* summary icon pills shown when collapsed */
+  .fc-pills{display:flex;gap:4px;align-items:center;flex-shrink:0}
+  .fc-pill{font-size:14px;line-height:1}
+  /* expand toggle */
+  .fc-toggle{width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;color:var(--text3);background:var(--metric-bg);transition:transform .2s}
+  .fc-toggle.open{transform:rotate(45deg)}
+  /* detail panel */
+  .fc-detail{display:none;border-top:1px solid var(--border);padding:10px 14px 12px}
+  .fc-detail.open{display:block}
+  .fc-detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:8px;margin-bottom:8px}
+  .fc-detail-tile{background:var(--metric-bg);border-radius:var(--rs);padding:9px 11px;display:flex;align-items:flex-start;gap:8px}
+  .fc-detail-tile.D{background:var(--danger-bg);border:1px solid var(--danger-bd)}
+  .fc-detail-tile.W{background:var(--warn-bg);border:1px solid var(--warn-bd)}
+  .fc-detail-tile.G{background:var(--good-bg);border:1px solid var(--good-bd)}
+  .fc-tile-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+  .fc-tile-icon.D{color:var(--danger-tx)}.fc-tile-icon.W{color:var(--warn-tx)}.fc-tile-icon.G{color:var(--good-tx)}.fc-tile-icon.N{color:var(--text3)}
+  .fc-tile-title{font-size:12px;font-weight:600;color:var(--text);line-height:1.3}
+  .fc-tile-sub{font-size:11px;color:var(--text2);margin-top:2px;line-height:1.4}
+  .fc-summary-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+  .fc-sum-chip{font-size:11px;background:var(--metric-bg);border-radius:100px;padding:2px 8px;color:var(--text2)}
 </style>
 </head>
 <body>
@@ -125,7 +171,7 @@
       <div class="dateline" id="dateline"></div>
     </div>
   </div>
-  <p class="sub">Outdoor alerts for the whole yard — furniture, plants, walks and more.</p>
+  <p class="sub">Outdoor alerts for the whole yard  -  furniture, plants, walks and more.</p>
 
   <div class="row">
     <input id="zip" type="text" placeholder="ZIP code" maxlength="5" inputmode="numeric" autocomplete="postal-code">
@@ -171,12 +217,12 @@
     </div>
 
     <div class="sec">
-      <div class="slabel">Top 3 Best 30-Minute Walk Increments</div>
-      <div style="font-size:11px;color:var(--text3);margin-bottom:8px">Ranked by comfort for little ones — temp, humidity, UV &amp; wind</div>
+      <div class="slabel">BEBE.v2 Walk Index: Top 30-Minute Walk Increments</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:8px">Ranked by comfort for little ones  -  temp, humidity, UV &amp; wind</div>
       <div id="walkTimes"></div>
     </div>
 
-    <div class="sec"><div class="slabel">Next 12 hours</div><div class="hrow" id="hourly"></div></div>
+    <div class="sec"><div class="slabel">Next 24 Hours</div><div class="hrow" id="hourly"></div></div>
     <div class="attr"><i class="ti ti-shield-check" style="font-size:13px"></i>Weather from Open-Meteo - open-meteo.com - free and open source</div>
   </div>
 
@@ -228,7 +274,7 @@ function heatIndex(tempF, rh){
 }
 
 // Comfort score for walking with babies/toddlers. Returns -1 if disqualified, else 0-130+
-// ── YARD GUARDIAN WALK INDEX ──────────────────────────────────
+// -- YARD GUARDIAN WALK INDEX ----------------------------------
 // Proprietary safety-first score for newborns, toddlers, and dogs.
 // Returns {score, breakdown} where score 0-100, -1 = disqualified.
 // Each factor is scored 0-100 and weighted by importance for infant safety.
@@ -269,7 +315,7 @@ function tempSafetyScore(tempF, humidity){
   else if(tempF>=45&&tempF<55)  score=60;
   else if(tempF>=35&&tempF<45)  score=35;
   else if(tempF<35)             score=10;  // too cold for newborn
-  // Heat index override — feels-like matters more than thermometer
+  // Heat index override  -  feels-like matters more than thermometer
   if(hi>105) score=Math.min(score,5);
   else if(hi>100) score=Math.min(score,15);
   else if(hi>95)  score=Math.min(score,30);
@@ -300,7 +346,7 @@ function windSafetyScore(wind, gust){
 
 function skyScore(code){
   if([0,1].includes(code)) return{score:70,label:'Sunny'};        // great but UV exposure
-  if(code===2)              return{score:100,label:'Partly cloudy'}; // best — shade + bright
+  if(code===2)              return{score:100,label:'Partly cloudy'}; // best  -  shade + bright
   if(code===3)              return{score:85, label:'Overcast'};    // no UV, fine
   return                        {score:0,  label:'Rain/Storm'};   // disqualified
 }
@@ -319,7 +365,7 @@ function timeOfDayScore(hr){
 function yardGuardianWalkIndex(h){
   const hr=h.time.getHours();
 
-  // Hard disqualifiers — score -1 means do not show
+  // Hard disqualifiers  -  score -1 means do not show
   if(hr<6||hr>=21)                                          return{score:-1,reason:'Too dark'};
   if([95,96,99,65,82,63,61,55,53,51].includes(h.code))     return{score:-1,reason:'Rain or storms'};
   if(h.gust>25||h.wind>20)                                  return{score:-1,reason:'Too windy for stroller'};
@@ -338,13 +384,13 @@ function yardGuardianWalkIndex(h){
   const skyS   = skyScore(h.code);
   const todS   = timeOfDayScore(hr);
 
-  // Weighted composite — UV and temp are most critical for infant safety
+  // Weighted composite  -  UV and temp are most critical for infant safety
   // Weights must sum to 1.0
   const composite=
-    uvS.score   * 0.25 +   // UV exposure — #1 infant skin hazard
+    uvS.score   * 0.25 +   // UV exposure  -  #1 infant skin hazard
     tempS.score * 0.22 +   // Temperature / heat index
     humS.score  * 0.15 +   // Humidity / heat stress
-    aqiS.score  * 0.15 +   // Air quality — PM2.5 lung safety
+    aqiS.score  * 0.15 +   // Air quality  -  PM2.5 lung safety
     windS.score * 0.10 +   // Wind safety for stroller
     skyS.score  * 0.08 +   // Cloud cover / shade
     todS.score  * 0.05;    // Time of day guidance
@@ -359,11 +405,12 @@ function yardGuardianWalkIndex(h){
 }
 
 function walkGradeLabel(score){
-  if(score>=88) return{grade:'A',label:'Excellent',color:'#15803d',bg:'#f0fdf4',bd:'#86efac'};
-  if(score>=75) return{grade:'B',label:'Good',     color:'#16a34a',bg:'#f0fdf4',bd:'#86efac'};
-  if(score>=60) return{grade:'C',label:'Fair',     color:'#ca8a04',bg:'#fffbeb',bd:'#fcd34d'};
-  if(score>=45) return{grade:'D',label:'Poor',     color:'#ea580c',bg:'#fff7ed',bd:'#fdba74'};
-  return             {grade:'F',label:'Avoid',     color:'#b91c1c',bg:'#fef2f2',bd:'#fca5a5'};
+  // Use CSS variables so dark mode works automatically
+  if(score>=88) return{grade:'A',label:'Excellent',cls:'walk-a'};
+  if(score>=75) return{grade:'B',label:'Good',     cls:'walk-b'};
+  if(score>=60) return{grade:'C',label:'Fair',     cls:'walk-c'};
+  if(score>=45) return{grade:'D',label:'Poor',     cls:'walk-d'};
+  return             {grade:'F',label:'Avoid',     cls:'walk-f'};
 }
 
 function isGoodWalkHour(h){
@@ -381,7 +428,7 @@ function walkFeelLabel(score){
 }
 
 function isDrySoil(c,f){
-  // True if soil is dry or bone dry — works on null/0/low values
+  // True if soil is dry or bone dry  -  works on null/0/low values
   const sm=c.soilMoisture;
   if(sm===null||sm===undefined||sm===0) return true;
   if(sm<0.10) return true;
@@ -404,7 +451,7 @@ const RULES=[
     check:(c,f)=>f.minTemp<=32||c.temp<=35,
     desc:(c,f)=>f.minTemp<=32?'Low of '+f.minTemp+'F expected - below freezing':'Currently '+c.temp+'F and dropping',
     action:'Bring in pots, cover garden beds, disconnect hoses'},
-  // MUST WATER — dry soil, no rain coming
+  // MUST WATER  -  dry soil, no rain coming
   {icon:'ti-droplet-filled',title:'Water the yard today',level:'D',emoji:'🌵',
     check:(c,f)=>isDrySoil(c,f)&&!isRainComing(f),
     desc:(c,f)=>{
@@ -419,15 +466,15 @@ const RULES=[
       return parts.join(' - ');
     },
     action:'Water lawn, garden beds, and potted plants today'},
-  // SHOULD WATER SOON — dry but small rain chance
-  {icon:'ti-droplet-half',title:'Water soon — rain unlikely to be enough',level:'W',emoji:'🌿',
+  // SHOULD WATER SOON  -  dry but small rain chance
+  {icon:'ti-droplet-half',title:'Water soon  -  rain unlikely to be enough',level:'W',emoji:'🌿',
     check:(c,f)=>isDrySoil(c,f)&&f.maxPrecipPct>=30&&f.maxPrecipPct<50&&!f.thunder&&!f.heavyRain,
     desc:(c,f)=>{
       const r7=f.last7Rain!=null?f.last7Rain:0;
       return 'Soil is dry'+(r7<0.1?' with no rain in a week':' - only '+r7.toFixed(2)+'" this week')+' - '+f.maxPrecipPct+'% rain chance likely not enough';
     },
-    action:'Water today or tomorrow — do not rely on forecast rain'},
-  // SKIP WATERING — wet soil or heavy rain coming
+    action:'Water today or tomorrow  -  do not rely on forecast rain'},
+  // SKIP WATERING  -  wet soil or heavy rain coming
   {icon:'ti-droplet',title:'Skip watering today',level:'W',emoji:'💧',
     check:(c,f)=>{
       if(isDrySoil(c,f)) return false; // dry = water, not skip
@@ -497,7 +544,7 @@ async function go(){
       +'&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_gusts_10m,precipitation_probability,weather_code,uv_index'
       +'&daily=weather_code,wind_speed_10m_max,wind_gusts_10m_max,precipitation_probability_max,'
       +'temperature_2m_min,temperature_2m_max,uv_index_max,precipitation_sum,et0_fao_evapotranspiration'
-      +'&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=7&past_days=7';
+      +'&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=9&past_days=7';
 
     // Fetch weather + air quality in parallel
     const aqUrl='https://air-quality-api.open-meteo.com/v1/air-quality?latitude='+lat+'&longitude='+lon
@@ -590,7 +637,7 @@ async function go(){
       ac.appendChild(d);
     });
 
-    // Watering recommendation bubble — always shows today + tomorrow
+    // Watering recommendation bubble  -  always shows today + tomorrow
     renderWateringRec(c,f,daily);
 
     buildSendMessage(c,f,uvMax,activeAlerts,zip,daily);
@@ -623,20 +670,37 @@ async function go(){
 
     renderWalkTimes(next24);
 
-    // Hourly chips
-    document.getElementById('hourly').innerHTML=next24.slice(0,12).map(h=>{
+    // Hourly chips - full 24 hours with walk safety indicator
+    document.getElementById('hourly').innerHTML=next24.slice(0,24).map(h=>{
       const hr=h.time.getHours();
       const lbl=hr===0?'12 AM':hr<12?hr+' AM':hr===12?'12 PM':(hr-12)+' PM';
       const[,ico]=wmoInfo(h.code);
       const score=walkComfortScore(h);
       const isWalk=score>0;
-      const cls=[95,96,99].includes(h.code)?'D':(h.gust>30||h.wind>25)?'W':isWalk?'WALK':'';
+      const isDark=hr<6||hr>=21;
+      const isRain=[95,96,99,65,82,63,61].includes(h.code);
+      const isStorm=[95,96,99].includes(h.code);
+      const isWindy=h.gust>30||h.wind>25;
+      // Determine chip class: storm=D, windy=W, good walk=WALK, unsafe daylight=UNSAFE, dark/neutral=''
+      let cls='';
+      if(isStorm) cls='D';
+      else if(isWindy) cls='W';
+      else if(isWalk) cls='WALK';
+      else if(!isDark&&!isWalk) cls='UNSAFE'; // daylight but not safe for baby
+      // Badge text
+      let badge='';
+      if(isWalk) badge='<div class="walk-badge">Walk</div>';
+      else if(isDark) badge='<div style="font-size:9px;color:var(--text3);margin-top:2px">Night</div>';
+      else if(isStorm) badge='<div class="unsafe-badge">Storm</div>';
+      else if(isWindy) badge='<div class="unsafe-badge">Windy</div>';
+      else if(isRain) badge='<div class="unsafe-badge">Rain</div>';
+      else if(score===-1) badge='<div class="unsafe-badge">No Walk</div>';
       return '<div class="hchip '+cls+'">'
         +'<div class="ht">'+lbl+'</div>'
         +'<div class="hi"><i class="ti '+ico+'"></i></div>'
         +'<div class="htemp">'+h.temp+'F</div>'
         +'<div class="hw">'+Math.round(h.wind)+' mph</div>'
-        +(isWalk?'<div class="walk-badge">Walk</div>':'')
+        +badge
         +'</div>';
     }).join('');
 
@@ -685,25 +749,25 @@ function wateringRecommendation(c, f, daily, dayOffset){
 
   // Tomorrow uses forecast only (no soil sensor)
   if(dayOffset===1){
-    if(rainStrong)  return{level:'G',icon:'ti-droplet',headline:'Skip watering tomorrow',detail:thunder?'Storms expected — ground will get plenty of water':'Heavy/likely rain ('+precip+'%) — skip watering, let rain do it'};
-    if(rainDecent)  return{level:'W',icon:'ti-droplet-half',headline:'Probably skip watering tomorrow',detail:'Decent rain chance ('+precip+'%) — likely enough, but water tonight if soil feels dry'};
-    if(rainLight)   return{level:'W',icon:'ti-droplet-half',headline:'Consider watering tomorrow',detail:'Light rain possible ('+precip+'%) — not enough to rely on, plan to water'};
-    return{level:'D',icon:'ti-droplet-filled',headline:'Water tomorrow',detail:'No rain expected — plan to water lawn and beds'+(r7<0.1?' (dry week, plants need it)':'')};
+    if(rainStrong)  return{level:'G',icon:'ti-droplet',headline:'Skip watering tomorrow',detail:thunder?'Storms expected  -  ground will get plenty of water':'Heavy/likely rain ('+precip+'%)  -  skip watering, let rain do it'};
+    if(rainDecent)  return{level:'W',icon:'ti-droplet-half',headline:'Probably skip watering tomorrow',detail:'Decent rain chance ('+precip+'%)  -  likely enough, but water tonight if soil feels dry'};
+    if(rainLight)   return{level:'W',icon:'ti-droplet-half',headline:'Consider watering tomorrow',detail:'Light rain possible ('+precip+'%)  -  not enough to rely on, plan to water'};
+    return{level:'D',icon:'ti-droplet-filled',headline:'Water tomorrow',detail:'No rain expected  -  plan to water lawn and beds'+(r7<0.1?' (dry week, plants need it)':'')};
   }
 
-  // Today — use soil moisture + recent rain + forecast
-  if(bonedrySoil && noRain)     return{level:'D',icon:'ti-droplet-filled',headline:'Must water today',detail:'Soil is bone dry'+(r7<0.1?' with no rain in 7 days':'')+' and no rain coming — water lawn, beds, and pots now'};
-  if(drySoil && noRain)         return{level:'D',icon:'ti-droplet-filled',headline:'Water today',detail:'Soil is dry'+(r7<0.25?' and little recent rain':'')+' — water before it gets worse'};
-  if(drySoil && rainLight)      return{level:'W',icon:'ti-droplet-half',headline:'Light rain may not be enough',detail:'Soil is dry and only '+precip+'% rain chance — water lightly or wait to see if rain arrives'};
-  if(drySoil && rainDecent)     return{level:'W',icon:'ti-droplet-half',headline:'Hold off — decent rain coming',detail:'Soil dry but '+precip+'% rain chance — give it a few hours before watering'};
-  if(drySoil && rainStrong)     return{level:'G',icon:'ti-droplet',headline:'Skip watering — rain coming',detail:'Soil is dry but strong rain expected ('+precip+'%) — let it rain first, water after if needed'};
-  if(moistSoil && rainStrong)   return{level:'G',icon:'ti-droplet',headline:'Definitely skip watering',detail:'Soil is moist + rain coming ('+precip+'%) — ground has more than enough'};
-  if(moistSoil || recentRain)   return{level:'G',icon:'ti-droplet',headline:'Skip watering today',detail:(moistSoil?'Soil moisture is good':'Recent rain ('+r3.toFixed(2)+'" in 3 days)')+(rainDecent?' + rain possible ('+precip+'%)':'')+' — no watering needed'};
-  if(rainStrong)                return{level:'G',icon:'ti-droplet',headline:'Skip watering — rain today',detail:thunder?'Storms coming — skip watering entirely':'Heavy rain likely ('+precip+'%) — skip watering today'};
-  if(rainDecent)                return{level:'W',icon:'ti-droplet-half',headline:'Probably skip watering',detail:'Decent rain chance ('+precip+'%) — check soil this afternoon before deciding'};
-  // Fallback — adequate soil, light or no rain
-  if(rainLight) return{level:'W',icon:'ti-droplet-half',headline:'Light rain possible — monitor',detail:precip+'% rain chance — water if it misses your area'};
-  return{level:'W',icon:'ti-droplet-half',headline:'Water if soil feels dry',detail:'No strong signals either way — check soil moisture and water if needed'};
+  // Today  -  use soil moisture + recent rain + forecast
+  if(bonedrySoil && noRain)     return{level:'D',icon:'ti-droplet-filled',headline:'Must water today',detail:'Soil is bone dry'+(r7<0.1?' with no rain in 7 days':'')+' and no rain coming  -  water lawn, beds, and pots now'};
+  if(drySoil && noRain)         return{level:'D',icon:'ti-droplet-filled',headline:'Water today',detail:'Soil is dry'+(r7<0.25?' and little recent rain':'')+'  -  water before it gets worse'};
+  if(drySoil && rainLight)      return{level:'W',icon:'ti-droplet-half',headline:'Light rain may not be enough',detail:'Soil is dry and only '+precip+'% rain chance  -  water lightly or wait to see if rain arrives'};
+  if(drySoil && rainDecent)     return{level:'W',icon:'ti-droplet-half',headline:'Hold off  -  decent rain coming',detail:'Soil dry but '+precip+'% rain chance  -  give it a few hours before watering'};
+  if(drySoil && rainStrong)     return{level:'G',icon:'ti-droplet',headline:'Skip watering  -  rain coming',detail:'Soil is dry but strong rain expected ('+precip+'%)  -  let it rain first, water after if needed'};
+  if(moistSoil && rainStrong)   return{level:'G',icon:'ti-droplet',headline:'Definitely skip watering',detail:'Soil is moist + rain coming ('+precip+'%)  -  ground has more than enough'};
+  if(moistSoil || recentRain)   return{level:'G',icon:'ti-droplet',headline:'Skip watering today',detail:(moistSoil?'Soil moisture is good':'Recent rain ('+r3.toFixed(2)+'" in 3 days)')+(rainDecent?' + rain possible ('+precip+'%)':'')+'  -  no watering needed'};
+  if(rainStrong)                return{level:'G',icon:'ti-droplet',headline:'Skip watering  -  rain today',detail:thunder?'Storms coming  -  skip watering entirely':'Heavy rain likely ('+precip+'%)  -  skip watering today'};
+  if(rainDecent)                return{level:'W',icon:'ti-droplet-half',headline:'Probably skip watering',detail:'Decent rain chance ('+precip+'%)  -  check soil this afternoon before deciding'};
+  // Fallback  -  adequate soil, light or no rain
+  if(rainLight) return{level:'W',icon:'ti-droplet-half',headline:'Light rain possible  -  monitor',detail:precip+'% rain chance  -  water if it misses your area'};
+  return{level:'W',icon:'ti-droplet-half',headline:'Water if soil feels dry',detail:'No strong signals either way  -  check soil moisture and water if needed'};
 }
 
 function renderWateringRec(c, f, daily){
@@ -747,12 +811,14 @@ function render7Day(daily){
   el.innerHTML='';
   const todayStr=new Date().toISOString().slice(0,10);
   const startIdx=daily.time.findIndex(t=>t>=todayStr);
-  const sliceStart=startIdx>=0?startIdx:0;
+  // Start from tomorrow (skip today index)
+  const sliceStart=(startIdx>=0?startIdx:0)+1;
+
   daily.time.slice(sliceStart).forEach((dateStr,ii)=>{
     const i=sliceStart+ii;
     const d=new Date(dateStr+'T12:00:00');
-    const isToday=ii===0;
-    const dayLabel=isToday?'Today':days[d.getDay()];
+    const isTomorrow=ii===0;
+    const dayLabel=days[d.getDay()].toUpperCase();
     const dateLabel=months[d.getMonth()]+' '+d.getDate();
     const code=daily.weather_code[i];
     const[desc,ico]=wmoInfo(code);
@@ -761,6 +827,7 @@ function render7Day(daily){
     const precip=daily.precipitation_probability_max[i]||0;
     const maxWind=Math.round(daily.wind_speed_10m_max[i]||0);
     const maxGust=Math.round(daily.wind_gusts_10m_max[i]||0);
+    const uvMax=daily.uv_index_max?Math.round(daily.uv_index_max[i]||0):0;
     const thunder=[95,96,99].includes(code);
     const hail=[96,99].includes(code);
     const heavyRain=[65,82].includes(code);
@@ -768,32 +835,109 @@ function render7Day(daily){
     const freeze=lo<=32;
     const dayData={maxWind,maxGust,maxPrecip:precip,minTemp:lo,thunder,hail,heavyRain,severe};
     const{worstLevel}=evalDay(dayData);
+    const needsAttention=worstLevel==='D'||worstLevel==='W';
 
-    const actions=[];
-    if(thunder||hail||maxGust>30) actions.push({level:'D',emoji:'🪑',text:'Cover and bring in patio furniture'+(maxGust>30?' - gusts up to '+maxGust+' mph':'')+(thunder?' - thunderstorms expected':'')});
-    if(hail||severe) actions.push({level:'D',emoji:'🚗',text:'Move cars into the garage - hail possible'});
-    if(freeze) actions.push({level:'D',emoji:'🌿',text:'Protect plants and bring in pots - low of '+lo+'F (freezing)'});
-    if(maxGust>25&&!thunder&&!hail) actions.push({level:'W',emoji:'💨',text:'Take down patio umbrella - gusts to '+maxGust+' mph'});
-    else if(maxWind>20&&maxGust<=25&&!thunder) actions.push({level:'W',emoji:'💨',text:'Secure lightweight items outside - winds '+maxWind+' mph'});
-    if(precip>60) actions.push({level:'W',emoji:'💧',text:'Skip watering the lawn - '+precip+'% chance of rain'});
-    else if(precip>30&&precip<=60) actions.push({level:'W',emoji:'🌧',text:'Watch rain forecast - '+precip+'% chance, may not need to water'});
+    // Build action tiles for expanded detail view
+    const tiles=[];
+    // Weather overview tile always first
+    tiles.push({level:'N',icon:'ti-'+ico.replace('ti-',''),title:desc,sub:hi+'F / '+lo+'F'+(precip>10?' - '+precip+'% rain chance':'')});
+    // Wind
+    if(maxGust>30||maxWind>25) tiles.push({level:'D',icon:'ti-tornado',title:'High winds',sub:'Gusts to '+maxGust+' mph - cover furniture, secure all loose items'});
+    else if(maxWind>15) tiles.push({level:'W',icon:'ti-wind',title:'Breezy',sub:maxWind+' mph sustained - check light outdoor items'});
+    // Storms / hail
+    if(thunder) tiles.push({level:'D',icon:'ti-cloud-storm',title:'Thunderstorms expected',sub:'Stay indoors during storms - unplug outdoor devices'});
+    if(hail)    tiles.push({level:'D',icon:'ti-cloud-storm',title:'Hail possible',sub:'Move cars to garage or under cover before storm'});
+    // Furniture
+    if(thunder||hail||maxGust>30) tiles.push({level:'D',icon:'ti-armchair',title:'Cover patio furniture',sub:'Bring in or cover cushions, chairs, and decor'});
+    // Freeze
+    if(freeze) tiles.push({level:'D',icon:'ti-snowflake',title:'Freeze warning',sub:'Low of '+lo+'F - bring in pots, cover garden beds, disconnect hoses'});
+    else if(lo<=38) tiles.push({level:'W',icon:'ti-snowflake',title:'Near freezing overnight',sub:'Low of '+lo+'F - consider covering sensitive plants'});
+    // Rain / watering
+    if(precip>=70) tiles.push({level:'G',icon:'ti-droplet',title:'Skip watering',sub:precip+'% rain chance - ground will get enough water'});
+    else if(precip>=40) tiles.push({level:'W',icon:'ti-droplet-half',title:'Watch rain forecast',sub:precip+'% chance - may not need to water, check mid-day'});
+    else if(precip<20&&!thunder) tiles.push({level:'W',icon:'ti-droplet-filled',title:'Plan to water',sub:'Low rain chance ('+precip+'%) - lawn and beds may need irrigation'});
+    // UV
+    if(uvMax>=8) tiles.push({level:'D',icon:'ti-sun',title:'Very high UV',sub:'UV '+uvMax+' - limit outdoor time 10am-4pm, sunscreen for all'});
+    else if(uvMax>=6) tiles.push({level:'W',icon:'ti-sun',title:'High UV',sub:'UV '+uvMax+' - sunscreen and hats recommended outdoors'});
+    else if(uvMax>=3) tiles.push({level:'N',icon:'ti-sun',title:'Moderate UV',sub:'UV '+uvMax+' - sunscreen for extended time outside'});
+    // All clear
+    if(!needsAttention) tiles.push({level:'G',icon:'ti-checks',title:'Yard looks good',sub:'No significant weather concerns - enjoy the day outside'});
 
-    const actionsHTML=actions.length
-      ?'<div class="fc-actions">'+actions.map(a=>'<div class="fc-action-item '+a.level+'"><span>'+a.emoji+'</span><span>'+a.text+'</span></div>').join('')+'</div>'
-      :'<div class="fc-actions"><div class="fc-action-item G"><span>✅</span><span>No yard action needed - enjoy the day</span></div></div>';
+    // Summary emoji pills for collapsed view (only on D/W days)
+    const pillEmojis=[];
+    if(thunder||hail)  pillEmojis.push('⛈️');
+    if(maxGust>30)     pillEmojis.push('💨');
+    if(freeze)         pillEmojis.push('🥶');
+    if(hail)           pillEmojis.push('🚗');
+    if(precip>=70)     pillEmojis.push('💧');
+    if(uvMax>=8)       pillEmojis.push('☀️');
+    if(maxWind>20&&maxGust<=30&&!thunder) pillEmojis.push('🌬️');
+
+    const pillsHTML=pillEmojis.length
+      ?'<div class="fc-pills">'+pillEmojis.map(e=>'<span class="fc-pill">'+e+'</span>').join('')+'</div>'
+      :'';
+
+    // Collapsed header hint text
+    const hintText=worstLevel==='D'?'Action needed':worstLevel==='W'?'Worth watching':'All clear';
+    const hintColor=worstLevel==='D'?'var(--danger-tx)':worstLevel==='W'?'var(--warn-tx)':'var(--good-tx)';
+
+    // Detail tiles HTML
+    const tilesHTML='<div class="fc-detail-grid">'
+      +tiles.map(t=>'<div class="fc-detail-tile '+t.level+'">'
+        +'<i class="ti '+t.icon+' fc-tile-icon '+t.level+'"></i>'
+        +'<div><div class="fc-tile-title">'+t.title+'</div>'
+        +'<div class="fc-tile-sub">'+t.sub+'</div></div>'
+        +'</div>').join('')
+      +'</div>';
+
+    const rowId='fcrow-'+ii;
+    const detailId='fcdetail-'+ii;
+    const toggleId='fctoggle-'+ii;
 
     const row=document.createElement('div');
-    row.className='forecast-row '+worstLevel+(isToday?' today':'');
-    row.innerHTML='<div class="fc-top">'
+    row.className='forecast-row '+worstLevel+(isTomorrow?' today':'');
+    row.id=rowId;
+
+    // Top bar  -  clickable only if D or W
+    const topClass=needsAttention?'fc-top clickable':'fc-top';
+    const toggleBtn=needsAttention
+      ?'<div class="fc-toggle" id="'+toggleId+'">+</div>'
+      :'';
+
+    row.innerHTML=
+      '<div class="'+topClass+'" data-detail="'+detailId+'" data-toggle="'+toggleId+'"'+(needsAttention?' onclick="toggleFcRow(this)"':'')+'>'
       +'<div class="fc-day">'+dayLabel+'</div>'
       +'<div class="fc-date">'+dateLabel+'</div>'
       +'<div class="fc-icon"><i class="ti '+ico+'"></i></div>'
-      +'<div class="fc-desc">'+desc+(precip>20?' - '+precip+'% rain':'')+'</div>'
+      +'<div class="fc-desc" style="display:flex;flex-direction:column;gap:2px">'
+      +'<span>'+desc+(precip>20?' - '+precip+'% rain':'')+'</span>'
+      +(needsAttention?'<span style="font-size:10px;font-weight:600;color:'+hintColor+'">'+hintText+'  -  tap to expand</span>':'')
+      +'</div>'
+      +pillsHTML
       +'<div class="fc-temps">'+hi+'F <span>/ '+lo+'F</span></div>'
       +'<div class="fc-dot '+worstLevel+'"></div>'
-      +'</div>'+actionsHTML;
+      +toggleBtn
+      +'</div>'
+      +(needsAttention
+        ?'<div class="fc-detail" id="'+detailId+'">'+tilesHTML+'</div>'
+        :'<div class="fc-detail open" id="'+detailId+'">'+tilesHTML+'</div>');
+
     el.appendChild(row);
   });
+}
+
+function toggleFcRow(el){
+  const detailId=el.getAttribute('data-detail');
+  const toggleId=el.getAttribute('data-toggle');
+  const detail=document.getElementById(detailId);
+  const toggle=document.getElementById(toggleId);
+  if(!detail) return;
+  const isOpen=detail.classList.contains('open');
+  detail.classList.toggle('open',!isOpen);
+  if(toggle){
+    toggle.textContent=isOpen?'+':'-';
+    toggle.classList.toggle('open',!isOpen);
+  }
 }
 
 function renderWalkTimes(next24){
@@ -802,7 +946,8 @@ function renderWalkTimes(next24){
   // Score every hour using the full Walk Index
   const scored=next24.map(h=>{
     const idx=yardGuardianWalkIndex(h);
-    return{...h,...idx};
+    // Spread idx but keep raw h.temp/h.humidity/h.wind as numbers under rawTemp etc
+    return{...h, rawTemp:h.temp, rawHumidity:h.humidity, rawWind:h.wind, ...idx};
   }).filter(h=>h.score>0);
 
   if(!scored.length){
@@ -850,57 +995,75 @@ function renderWalkTimes(next24){
   el.innerHTML=top3hours.map((h,i)=>{
     const g=walkGradeLabel(h.score);
     const range=fmt30(h.time);
-    const feelsStr=h.feelsLike&&h.feelsLike>h.temp+3?' / Feels '+h.feelsLike+'F':'';
-    const aqLabel=h.aqi&&h.aqi.label?h.aqi.label:(h.aqi&&h.aqi.score!==undefined?'AQI ~good':'Unknown');
 
-    return '<div style="border-radius:var(--r);border:1px solid '+g.bd
-      +';background:'+g.bg+';padding:1rem 1.25rem;margin-bottom:10px">'
+    // Pull clean values from the Walk Index breakdown stored on h
+    const uvScore   = h.uv   && typeof h.uv.score==='number'   ? h.uv.score   : 70;
+    const uvLabel   = h.uv   && h.uv.label   ? h.uv.label   : 'UV '+( h.uv||'--');
+    const tempScore = h.temp && typeof h.temp.score==='number'  ? h.temp.score : 70;
+    const humScore  = h.humidity && typeof h.humidity.score==='number' ? h.humidity.score : 70;
+    const humLabel  = h.humidity && h.humidity.label ? h.humidity.label : (h.humidity||'--')+'%';
+    const aqScore   = h.aqi  && typeof h.aqi.score==='number'   ? h.aqi.score  : 80;
+    const aqLabel   = h.aqi  && h.aqi.label  ? h.aqi.label  : 'Good';
+    const windScore = h.wind && typeof h.wind.score==='number'  ? h.wind.score : 80;
+    const windLabel = h.wind && h.wind.label ? h.wind.label : (h.wind||0)+' mph';
+    const skyScore  = h.sky  && typeof h.sky.score==='number'   ? h.sky.score  : 80;
+    const skyLabel  = h.sky  && h.sky.label  ? h.sky.label  : 'Clear';
+    const todScore  = h.tod  && typeof h.tod.score==='number'   ? h.tod.score  : 70;
+    const todLabel  = h.tod  && h.tod.label  ? h.tod.label  : '';
 
-      // Header row: medal + time + grade badge
-      +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">'
-      +'<span style="font-size:22px">'+medals[i]+'</span>'
-      +'<div style="flex:1">'
-      +'<div style="font-size:15px;font-weight:700;color:var(--text)">'+range+'</div>'
-      +'<div style="font-size:12px;color:var(--text2);margin-top:1px">'+h.temp+'F'+feelsStr+' &nbsp;·&nbsp; '+h.humidity+'% humidity &nbsp;·&nbsp; '+(h.wind||0)+' mph wind</div>'
+    // Display temp and feels-like cleanly
+    const rawTemp   = h.rawTemp||h.temp&&typeof h.temp==='number'?h.rawTemp||h.temp:'--';
+    const dispTemp  = h.feelsLike&&h.feelsLike>rawTemp+3 ? rawTemp+'F / Feels '+h.feelsLike+'F' : rawTemp+'F';
+    const rawHum    = h.rawHumidity!=null ? h.rawHumidity : '--';
+    const rawWind   = typeof h.rawWind==='number' ? h.rawWind : '--';
+
+    // Summary line under the time
+    const summaryParts = [dispTemp, rawHum+'% humidity', rawWind+' mph wind'];
+    if(todLabel) summaryParts.push(todLabel);
+    const summaryLine = summaryParts.join(' - ');
+
+    return '<div class="walk-card '+g.cls+'">'
+      +'<div class="walk-header">'
+      +'<span class="walk-medal">'+medals[i]+'</span>'
+      +'<div class="walk-time-block">'
+      +'<div class="walk-time">'+range+'</div>'
+      +'<div class="walk-detail">'+summaryLine+'</div>'
       +'</div>'
-      +'<div style="text-align:center;flex-shrink:0">'
-      +'<div style="font-size:24px;font-weight:800;color:'+g.color+'">'+g.grade+'</div>'
-      +'<div style="font-size:10px;font-weight:600;color:'+g.color+'">'+g.label+'</div>'
+      +'<div class="walk-grade-badge">'
+      +'<div class="walk-grade">'+g.grade+'</div>'
+      +'<div class="walk-grade-label">'+g.label+'</div>'
       +'</div></div>'
-
-      // Factor breakdown bars
-      +'<div style="border-top:1px solid '+g.bd+';padding-top:8px">'
-      +'<div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Walk Index Breakdown</div>'
-      +factorBar(h.uv.score,    'UV Safety',  'ti-sun')
-      +factorBar(h.temp.score,  'Temp/Heat',  'ti-thermometer')
-      +factorBar(h.humidity.score,'Humidity', 'ti-droplet')
-      +factorBar(h.aqi.score,   'Air Quality','ti-leaf')
-      +factorBar(h.wind.score,  'Wind',       'ti-wind')
-      +factorBar(h.sky.score,   'Sky/Shade',  'ti-cloud-sun')
-      +factorBar(h.tod.score,   'Time of Day','ti-clock')
-      +'<div style="margin-top:6px;font-size:11px;font-weight:600;color:'+g.color+'">'
-      +'Yard Guardian Walk Index: '+h.score+'/100'
-      +'</div></div></div>';
+      +'<div class="walk-breakdown">'
+      +'<div class="walk-breakdown-title">BEBE.v2 Walk Index Breakdown</div>'
+      +factorBar(uvScore,   'UV Safety  ('+uvLabel+')',   'ti-sun')
+      +factorBar(tempScore, 'Temp / Heat Index',          'ti-thermometer')
+      +factorBar(humScore,  'Humidity  ('+humLabel+')',   'ti-droplet')
+      +factorBar(aqScore,   'Air Quality  ('+aqLabel+')', 'ti-leaf')
+      +factorBar(windScore, 'Wind  ('+windLabel+')',      'ti-wind')
+      +factorBar(skyScore,  'Sky / Shade  ('+skyLabel+')', 'ti-cloud-sun')
+      +factorBar(todScore,  'Time of Day  ('+todLabel+')', 'ti-clock')
+      +'<div class="walk-index-score">BEBE.v2 Walk Index: '+h.score+'/100</div>'
+      +'</div></div>';
   }).join('');
 }
 
 function soilMoistureLabel(sm){
   // sm is volumetric soil moisture 0-1 (fraction)
-  // Treat 0 the same as truly dry — open-meteo returns 0 in drought conditions
-  if(sm===null||sm===undefined) return{label:'Dry',color:'var(--danger-tx)',advice:'Soil is very dry — water today regardless of forecast'};
-  if(sm===0)                    return{label:'Bone dry',color:'var(--danger-tx)',advice:'Extremely dry — drought-like conditions, water now'};
-  if(sm>=0.35) return{label:'Saturated',color:'var(--info-tx)',advice:'Ground is very wet — definitely skip watering'};
-  if(sm>=0.25) return{label:'Moist',color:'var(--good-tx)',advice:'Soil has good moisture — no watering needed'};
-  if(sm>=0.15) return{label:'Adequate',color:'var(--good-tx)',advice:'Soil moisture is OK — water only if no rain coming'};
-  if(sm>=0.08) return{label:'Getting dry',color:'var(--warn-tx)',advice:'Soil drying out — water if no rain in 24 hrs'};
-  return{label:'Dry',color:'var(--danger-tx)',advice:'Soil is dry — water soon regardless of forecast'};
+  // Treat 0 the same as truly dry  -  open-meteo returns 0 in drought conditions
+  if(sm===null||sm===undefined) return{label:'Dry',color:'var(--danger-tx)',advice:'Soil is very dry  -  water today regardless of forecast'};
+  if(sm===0)                    return{label:'Bone dry',color:'var(--danger-tx)',advice:'Extremely dry  -  drought-like conditions, water now'};
+  if(sm>=0.35) return{label:'Saturated',color:'var(--info-tx)',advice:'Ground is very wet  -  definitely skip watering'};
+  if(sm>=0.25) return{label:'Moist',color:'var(--good-tx)',advice:'Soil has good moisture  -  no watering needed'};
+  if(sm>=0.15) return{label:'Adequate',color:'var(--good-tx)',advice:'Soil moisture is OK  -  water only if no rain coming'};
+  if(sm>=0.08) return{label:'Getting dry',color:'var(--warn-tx)',advice:'Soil drying out  -  water if no rain in 24 hrs'};
+  return{label:'Dry',color:'var(--danger-tx)',advice:'Soil is dry  -  water soon regardless of forecast'};
 }
 
 function renderSoilContext(f){
   const el=document.getElementById('soilContext');
   if(!el) return;
 
-  // Always show the panel — even zeros and nulls get a clear message
+  // Always show the panel  -  even zeros and nulls get a clear message
   const sm=soilMoistureLabel(f.soilMoisture);  // never returns null now
   const r3=typeof f.last3Rain==='number'?f.last3Rain:0;
   const r7=typeof f.last7Rain==='number'?f.last7Rain:0;
@@ -914,26 +1077,26 @@ function renderSoilContext(f){
   let html='<div class="card '+cardClass+'" style="flex-direction:column;gap:10px;align-items:stretch">';
   html+='<div style="display:flex;gap:12px;flex-wrap:wrap">';
 
-  // Soil moisture — always shown
+  // Soil moisture  -  always shown
   html+='<div style="flex:1;min-width:130px">'
     +'<div class="ml"><i class="ti ti-leaf" style="font-size:12px"></i> Soil moisture now</div>'
     +'<div style="font-size:16px;font-weight:700;color:'+sm.color+';margin-top:4px">'+sm.label+'</div>'
     +'<div style="font-size:11px;color:var(--text2);margin-top:2px">'+sm.advice+'</div>'
     +'</div>';
 
-  // Recent rainfall — always shown, even if zero
+  // Recent rainfall  -  always shown, even if zero
   const r3Str=r3===0?'None':r3.toFixed(2)+'"';
   const r7Str=r7===0?'None':r7.toFixed(2)+'"';
   const r3Color=r3===0?'var(--danger-tx)':r3<0.25?'var(--warn-tx)':'var(--text)';
   html+='<div style="flex:1;min-width:130px">'
     +'<div class="ml"><i class="ti ti-cloud-rain" style="font-size:12px"></i> Recent rainfall</div>'
     +'<div style="font-size:16px;font-weight:700;color:'+r3Color+';margin-top:4px">'+r3Str+'</div>'
-    +'<div style="font-size:11px;color:var(--text2);margin-top:2px">last 3 days &nbsp;·&nbsp; '+r7Str+' last 7 days</div>'
+    +'<div style="font-size:11px;color:var(--text2);margin-top:2px">last 3 days &nbsp;.&nbsp; '+r7Str+' last 7 days</div>'
     +'</div>';
 
-  // Water balance — always shown if we have ET data
+  // Water balance  -  always shown if we have ET data
   if(wb!==null){
-    const wbLabel=wb>0.1?'Surplus — hold off watering':wb<-0.1?'Deficit — ground losing moisture':'About even';
+    const wbLabel=wb>0.1?'Surplus  -  hold off watering':wb<-0.1?'Deficit  -  ground losing moisture':'About even';
     const wbColor=wb>0.1?'var(--good-tx)':wb<-0.1?'var(--warn-tx)':'var(--text3)';
     html+='<div style="flex:1;min-width:130px">'
       +'<div class="ml"><i class="ti ti-droplet-half" style="font-size:12px"></i> Water balance (3 days)</div>'
@@ -946,7 +1109,7 @@ function renderSoilContext(f){
   if((sm.label==='Bone dry'||sm.label==='Dry')&&r7<0.1){
     html+='</div>'
       +'<div style="font-size:12px;font-weight:600;color:var(--danger-tx);padding:6px 0 0 0;border-top:1px solid var(--danger-bd)">'
-      +'⚠️ Drought-like conditions — little to no rainfall in 7 days. Water plants and lawn regularly.'
+      +'⚠️ Drought-like conditions  -  little to no rainfall in 7 days. Water plants and lawn regularly.'
       +'</div>';
   } else {
     html+='</div>';
@@ -1011,7 +1174,7 @@ function buildSendMessage(c,f,uvMax,activeAlerts,zip,daily){
     actionAlerts.forEach(a=>{
       const emoji=a.level==='D'?'🚨':'⚠️';
       lines.push(emoji+' '+a.title);
-      if(a.action) lines.push('   → '+a.action);
+      if(a.action) lines.push('   -> '+a.action);
     });
     if(rain) lines.push(rain);
   }
@@ -1050,7 +1213,7 @@ function buildSendMessage(c,f,uvMax,activeAlerts,zip,daily){
     if(!tmrActionAlerts.length&&!tmrRain) lines.push('   ✅ Looks good - no action needed');
   }
   lines.push('');
-  lines.push('❤️ Dada loves you - from the Yard Guardian team');
+  lines.push('<3 love, dada');
   _alertSummary=lines.join('\n');
   document.getElementById('sendPreview').textContent=_alertSummary;
 }
